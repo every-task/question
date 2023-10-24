@@ -29,7 +29,44 @@ public class ArticleService {
         List<Article> getArticles = articleRepository.findAll();
         return getArticles.stream().map(ArticleResponse::new).toList();
     }
+    @ResponseStatus(HttpStatus.OK)
+    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
+    {
+        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
+        return getArticleByCategory;
 
+    }
+    // id로 article 찾아옴
+    public Article findById(Long id)
+    {
+        //예외처리 없을 경우
+        Optional<Article> isIdNull = articleRepository.findById(id);
+        Article article =isIdNull.orElseThrow(()->new NoArticleById("회원이 없습니다."));
+        return article;
+    }
+    //상세 article
+    @ResponseStatus(HttpStatus.OK)
+    public Article getById(Long id)
+    {
+        Article article =findById(id);
+        return article;
+    }
+    //id
+
+    public void deleteById(Long id)
+    {
+        Article article = findById(id);
+        articleRepository.deleteById(article.getId());
+    }
+    //update
+    @ResponseStatus(HttpStatus.OK)
+    public Article updateArticle(Long id,ArticleRequest article)
+    {
+        Article article1 = findById(id);
+        article1.setContent(article.getContent());
+        article1.setTitle(article.getTitle());
+        return article1;
+    }
 
 
 }
