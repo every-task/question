@@ -53,7 +53,14 @@ public class ArticleService {
         articleRepository.deleteById(article.getId());
     }
     //update
-
+    @ResponseStatus(HttpStatus.OK)
+    public Article updateArticle(Long id,ArticleRequest article)
+    {
+        Article article1 = findById(id);
+        article1.setContent(article.getContent());
+        article1.setTitle(article.getTitle());
+        return article1;
+    }
 
 
 }
