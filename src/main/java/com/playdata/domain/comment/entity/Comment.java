@@ -1,6 +1,7 @@
 package com.playdata.domain.comment.entity;
 
 import com.playdata.config.BaseEntity;
+import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -20,4 +21,6 @@ public class Comment extends BaseEntity {
 
     @ManyToOne
     private Member member;
+    @ManyToOne
+    private Article article;
 }
