@@ -30,6 +30,25 @@ public class ArticleService {
         return getArticles.stream().map(ArticleResponse::new).toList();
     }
 
+    // id로 article 찾아옴
+    public Article findById(Long id)
+    {
+        //예외처리 없을 경우
+        Optional<Article> isIdNull = articleRepository.findById(id);
+        Article article =isIdNull.orElseThrow(()->new NoArticleById("회원이 없습니다."));
+        return article;
+    }
+    //상세 article
+
+    //id
+
+    public void deleteById(Long id)
+    {
+        Article article = findById(id);
+        articleRepository.deleteById(article.getId());
+    }
+    //update
+
 
 
 }

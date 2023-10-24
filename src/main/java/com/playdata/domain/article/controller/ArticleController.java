@@ -6,6 +6,7 @@ import com.playdata.domain.article.response.ArticleResponse;
 import com.playdata.domain.article.service.ArticleService;
 import com.playdata.domain.article.request.ArticleRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,13 @@ public class ArticleController {
     {
         return articleService.getAll();
     }
+    //질문 삭제
+    @DeleteMapping("{id}")
+    public void deleteArticle(@PathVariable Long id)
+    {
+        articleService.deleteById(id);
+    }
+
 
 
 }
