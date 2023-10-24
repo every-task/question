@@ -29,7 +29,13 @@ public class ArticleService {
         List<Article> getArticles = articleRepository.findAll();
         return getArticles.stream().map(ArticleResponse::new).toList();
     }
+    @ResponseStatus(HttpStatus.OK)
+    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
+    {
+        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
+        return getArticleByCategory;
 
+    }
     // id로 article 찾아옴
     public Article findById(Long id)
     {

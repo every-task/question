@@ -42,7 +42,12 @@ public class ArticleController {
         return articleService.updateArticle(id,articleRequest);
 
     }
-
+    //질문 카테고리 조회
+    @GetMapping("/category")
+    public List<ArticleResponse> getByCategory(@RequestBody ArticleCategoryRequest articleCategoryRequest)
+    {
+        return articleService.getByCategory(articleCategoryRequest);
+    }
     //질문 상세 조회
     @GetMapping("/{id}")
     public Article getById(@PathVariable("id")Long id)
