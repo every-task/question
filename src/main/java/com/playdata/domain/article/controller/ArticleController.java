@@ -35,7 +35,14 @@ public class ArticleController {
     {
         articleService.deleteById(id);
     }
+    //질문 수정
 
+    //질문 상세 조회
+    @GetMapping("/{id}")
+    public Article getById(@PathVariable("id")Long id)
+    {
+        return articleService.getById(id);
+    }
 
 
 }

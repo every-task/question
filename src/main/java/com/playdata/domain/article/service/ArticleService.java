@@ -39,7 +39,12 @@ public class ArticleService {
         return article;
     }
     //상세 article
-
+    @ResponseStatus(HttpStatus.OK)
+    public Article getById(Long id)
+    {
+        Article article =findById(id);
+        return article;
+    }
     //id
 
     public void deleteById(Long id)
