@@ -23,6 +23,12 @@ public class ArticleService {
     {
         articleRepository.save(articleRequest.toEntity());
     }
+    @ResponseStatus(HttpStatus.OK)
+    public List<ArticleResponse> getAll()
+    {
+        List<Article> getArticles = articleRepository.findAll();
+        return getArticles.stream().map(ArticleResponse::new).toList();
+    }
 
 
 

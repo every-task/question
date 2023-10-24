@@ -22,7 +22,12 @@ public class ArticleController {
     {
         articleService.insert(articleRequest);
     }
-
+    @GetMapping
+    //질문 조회
+    public List<ArticleResponse> getAll()
+    {
+        return articleService.getAll();
+    }
 
 
 }
