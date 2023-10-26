@@ -1,43 +1,46 @@
-package com.playdata.domain.article.service;
+package com.playdata.article.service;
 
 import com.playdata.config.exception.NoArticleById;
 import com.playdata.domain.article.entity.Article;
+import com.playdata.domain.article.kafka.ArticleKafka;
 import com.playdata.domain.article.repository.ArticleRepository;
-import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleResponse;
-import com.playdata.domain.comment.entity.Comment;
-import com.playdata.domain.comment.repository.CommentRepository;
+import com.playdata.kafka.QuestionProducer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
-    @ResponseStatus(HttpStatus.CREATED)
-    public void insert(ArticleRequest articleRequest)
+    private final QuestionProducer questionProducer;
+
+    public void insert(ArticleRequest articleRequest, UUID memberId)
     {
-        articleRepository.save(articleRequest.toEntity());
+        Article save = articleRepository.save(articleRequest.toEntity(memberId));
+        questionProducer.send(ArticleKafka.of(save));
     }
-    @ResponseStatus(HttpStatus.OK)
+
+
     public List<ArticleResponse> getAll()
     {
         List<Article> getArticles = articleRepository.findAll();
         return getArticles.stream().map(ArticleResponse::new).toList();
     }
-    @ResponseStatus(HttpStatus.OK)
-    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
-    {
-        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
-        return getArticleByCategory;
 
-    }
+
+
+//    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
+//    {
+//        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
+//        return getArticleByCategory;
+//
+//    }
     // id로 article 찾아옴
     public Article findById(Long id)
     {
@@ -47,7 +50,6 @@ public class ArticleService {
         return article;
     }
 //    상세 article
-    @ResponseStatus(HttpStatus.OK)
     public ArticleResponse getById(Long id)
     {
         Article article =findById(id);
@@ -60,7 +62,6 @@ public class ArticleService {
         articleRepository.deleteById(article.getId());
     }
     //update
-    @ResponseStatus(HttpStatus.OK)
     public Article updateArticle(Long id,ArticleRequest article)
     {
         Article article1 = findById(id);

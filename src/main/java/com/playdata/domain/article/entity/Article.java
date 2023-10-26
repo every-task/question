@@ -27,7 +27,7 @@ public class Article extends BaseEntity {
     private String category;
 
     @OneToMany(mappedBy = "article")
-    private List<Comment> commentList;
+    private List<Comment> comments;
 
     @ManyToOne
     private Member member;
