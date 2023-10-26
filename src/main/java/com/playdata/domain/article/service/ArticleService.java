@@ -1,16 +1,23 @@
 package com.playdata.domain.article.service;
 
+import com.playdata.config.TokenInfo;
 import com.playdata.config.exception.NoArticleById;
 import com.playdata.domain.article.entity.Article;
+import com.playdata.domain.article.kafka.ArticleKafka;
 import com.playdata.domain.article.repository.ArticleRepository;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleResponse;
 import com.playdata.domain.comment.entity.Comment;
 import com.playdata.domain.comment.repository.CommentRepository;
+import com.playdata.domain.member.entity.Member;
+import com.playdata.domain.member.repository.MemberRepository;
+import com.playdata.kafka.QuestionProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
@@ -18,13 +25,18 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final QuestionProducer questionProducer;
     @ResponseStatus(HttpStatus.CREATED)
-    public void insert(ArticleRequest articleRequest)
+    public void insert(TokenInfo tokenInfo,ArticleRequest articleRequest)
     {
-        articleRepository.save(articleRequest.toEntity());
+        Member member = new Member(tokenInfo.getId(),tokenInfo.getNickname(),tokenInfo.getProfileImageUrl());
+        Article article = articleRepository.save(articleRequest.toEntity());
+        questionProducer.send(ArticleKafka.of(article));
     }
+
     @ResponseStatus(HttpStatus.OK)
     public List<ArticleResponse> getAll()
     {
