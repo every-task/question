@@ -6,6 +6,7 @@ import com.playdata.domain.article.repository.ArticleRepository;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleResponse;
+import com.playdata.domain.comment.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final CommentRepository commentRepository;
     @ResponseStatus(HttpStatus.CREATED)
     public void insert(ArticleRequest articleRequest)
     {
@@ -40,7 +42,7 @@ public class ArticleService {
     public Article findById(Long id)
     {
         //예외처리 없을 경우
-        Optional<Article> isIdNull = articleRepository.findById(id);
+        Optional<Article> isIdNull = articleRepository.findArticleById(id);
         Article article =isIdNull.orElseThrow(()->new NoArticleById("회원이 없습니다."));
         return article;
     }
