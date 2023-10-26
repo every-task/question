@@ -11,8 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article,Long>,ArticleQueryDslRepository {
-    @Query("select a from Article as a join fetch a.commentList")
-    Optional<Article> findArticleById(Long id);
+
 
     @Query("select a from Article as a where a.id = :id")
     Optional<Article> findArticleByIdToDelete(Long id);
