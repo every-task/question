@@ -2,9 +2,7 @@ package com.playdata.domain.member.entity;
 
 import com.playdata.domain.article.entity.Article;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +11,9 @@ import java.util.UUID;
 @Table(name = "member")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+//builder all args 추가함
+@Builder
+@AllArgsConstructor
 public class Member {
     @Id
     private UUID id;
@@ -23,4 +24,9 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Article> articles;
 
+    public Member(UUID id, String nickname, String profileImageUrl) {
+        this.id=id;
+        this.nickname=nickname;
+        this.profileImageUrl=profileImageUrl;
+    }
 }
