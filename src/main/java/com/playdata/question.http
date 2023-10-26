@@ -17,7 +17,7 @@ DELETE http://localhost:8080/api/v1/question/article/2
 Accept: application/json
 
 ### findArticleById(질문 상세조회)
-GET http://localhost:8080/api/v1/question/article/3
+GET http://localhost:8080/api/v1/question/article/1
 Accept: application/json
 
 ### updateArticleById(질문 업데이트)
@@ -27,5 +27,15 @@ Content-Type: application/json
 {
   "title" : "변경입니다.",
   "content": "바꿔주세요"
+
+}
+
+### insertComment(댓글 등록)
+POST http://localhost:8080/api/v1/question/comment
+Content-Type: application/json
+
+{
+   "articleId" : 1,
+   "content" : "댓글입니다."
 
 }
