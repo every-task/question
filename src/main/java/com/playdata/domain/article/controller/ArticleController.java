@@ -48,9 +48,9 @@ public class ArticleController {
     {
         return articleService.getByCategory(articleCategoryRequest);
     }
-    //질문 상세 조회
+//    질문 상세 조회
     @GetMapping("/{id}")
-    public Article getById(@PathVariable("id")Long id)
+    public ArticleResponse getById(@PathVariable("id")Long id)
     {
         return articleService.getById(id);
     }

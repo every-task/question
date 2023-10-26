@@ -6,6 +6,8 @@ import com.playdata.domain.article.repository.ArticleRepository;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleResponse;
+import com.playdata.domain.comment.entity.Comment;
+import com.playdata.domain.comment.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -40,18 +42,17 @@ public class ArticleService {
     public Article findById(Long id)
     {
         //예외처리 없을 경우
-        Optional<Article> isIdNull = articleRepository.findById(id);
+        Optional<Article> isIdNull = articleRepository.findArticleById(id);
         Article article =isIdNull.orElseThrow(()->new NoArticleById("회원이 없습니다."));
         return article;
     }
-    //상세 article
+//    상세 article
     @ResponseStatus(HttpStatus.OK)
-    public Article getById(Long id)
+    public ArticleResponse getById(Long id)
     {
         Article article =findById(id);
-        return article;
+        return new ArticleResponse(article);
     }
-    //id
 
     public void deleteById(Long id)
     {

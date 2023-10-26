@@ -14,7 +14,13 @@ public class CommentResponse {
     private Long id;
     private String content;
     private Member member;
-    private Article article;
+
+
+    public CommentResponse(Comment comment) {
+        this.id = comment.getId();
+        this.content = comment.getContent();
+        this.member = comment.getMember();
+    }
 
 
 }

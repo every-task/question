@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,7 +20,8 @@ public class ArticleResponse {
     private String title;
     private String content;
     private Member member;
-    private List<Comment> commentList;
+    private List<?> commentList;
+
 
     @QueryProjection
     public ArticleResponse(Article article)
@@ -27,12 +29,10 @@ public class ArticleResponse {
         this.title=article.getTitle();
         this.content=article.getContent();
         this.member= article.getMember();
-    }
-    @QueryProjection
-    public ArticleResponse(Article article, List<Comment> commentList)
-    {
-        this.title=article.getTitle();
-        this.content=article.getContent();
-        this.member= article.getMember();
+        this.commentList = article.getCommentList() != null ?
+                article.getCommentList()
+                        .stream()
+                        .map(CommentResponse::new).toList() :new ArrayList<>();
+
     }
 }
