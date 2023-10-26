@@ -1,5 +1,6 @@
 package com.playdata.domain.article.controller;
 
+import com.playdata.config.TokenInfo;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.response.ArticleResponse;
@@ -7,6 +8,7 @@ import com.playdata.domain.article.service.ArticleService;
 import com.playdata.domain.article.request.ArticleRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +21,10 @@ public class ArticleController {
     private final ArticleService articleService;
     //질문 등록
     @PostMapping()
-    public void insert(@RequestBody ArticleRequest articleRequest)
+    public void insert(@AuthenticationPrincipal TokenInfo tokenInfo,
+                       @RequestBody ArticleRequest articleRequest)
     {
-        articleService.insert(articleRequest);
+        articleService.insert(tokenInfo,articleRequest);
     }
     @GetMapping
     //질문 조회
