@@ -4,6 +4,7 @@ Accept: application/json
 
 ### insertArticle(질문 작성)
 POST http://localhost:8082/api/v1/question/article
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Im5pY2tuYW1lIiwiaWQiOiI5NjlkZDlhMi0wMWM3LTRhZjQtODFkOS01ZWFmZjk0MjMwNDQiLCJwcm9maWxlSW1hZ2VVcmwiOiJwcm9maWxlSW1hZ2VVcmwiLCJlbWFpbCI6IjIiLCJleHAiOjE2OTg2NDA3ODN9.hTGyKHXJDiYGImGNLFwnrnbSFkOfCLeC5b-N9k2VSAo
 Content-Type: application/json
 
 {
@@ -31,11 +32,10 @@ Content-Type: application/json
 }
 
 ### insertComment(댓글 등록)
-POST http://localhost:8082/api/v1/question/comment
+POST http://localhost:8082/api/v1/question/comment/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Im5pY2tuYW1lIiwiaWQiOiI5NjlkZDlhMi0wMWM3LTRhZjQtODFkOS01ZWFmZjk0MjMwNDQiLCJwcm9maWxlSW1hZ2VVcmwiOiJwcm9maWxlSW1hZ2VVcmwiLCJlbWFpbCI6IjIiLCJleHAiOjE2OTg2NDA3ODN9.hTGyKHXJDiYGImGNLFwnrnbSFkOfCLeC5b-N9k2VSAo
 
 {
-   "articleId" : 1,
-   "content" : "댓글입니다."
-
+  "content" : "수정입니다."
 }
