@@ -17,6 +17,8 @@ import java.util.List;
 //추후 수정 mapping 주소
 @RequestMapping("/api/v1/question/article")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class ArticleController {
     private final ArticleService articleService;
     //질문 등록
