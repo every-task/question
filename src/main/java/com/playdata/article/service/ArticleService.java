@@ -1,5 +1,6 @@
 package com.playdata.article.service;
 
+import com.playdata.config.TokenInfo;
 import com.playdata.config.exception.NoArticleById;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.kafka.ArticleKafka;
@@ -57,18 +58,30 @@ public class ArticleService {
         return new ArticleResponse(article);
     }
 
-    public void deleteById(Long id)
+    public void deleteById(TokenInfo tokenInfo,Long id)
     {
         Article article = findById(id);
-        articleRepository.deleteById(article.getId());
+        if(tokenInfo.getId().equals(article.getId()))
+        {
+            articleRepository.deleteById(article.getId());
+        }
+        //예외 exception 발생
+        else {
+
+        }
     }
     //update
-    public Article updateArticle(Long id,ArticleRequest article)
+    public Article updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article)
     {
         Article article1 = findById(id);
-        article1.setContent(article.getContent());
-        article1.setTitle(article.getTitle());
-        return article1;
+        if(tokenInfo.getId().equals(article1.getId()))
+        {
+            article1.setContent(article.getContent());
+            article1.setTitle(article.getTitle());
+            return article1;
+        }
+        //예외 exception
+        return null;
     }
 
 

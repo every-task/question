@@ -36,15 +36,15 @@ public class ArticleController {
     }
     //질문 삭제
     @DeleteMapping("{id}")
-    public void deleteArticle(@PathVariable Long id)
+    public void deleteArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id)
     {
-        articleService.deleteById(id);
+        articleService.deleteById(tokenInfo,id);
     }
     //질문 수정
     @PutMapping("{id}")
-    public Article updateArticle(@PathVariable Long id , @RequestBody ArticleRequest articleRequest)
+    public Article updateArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id , @RequestBody ArticleRequest articleRequest)
     {
-        return articleService.updateArticle(id,articleRequest);
+        return articleService.updateArticle(tokenInfo,id,articleRequest);
 
     }
     //질문 카테고리 조회
