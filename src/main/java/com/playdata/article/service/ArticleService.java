@@ -4,6 +4,7 @@ import com.playdata.config.exception.NoArticleById;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.kafka.ArticleKafka;
 import com.playdata.domain.article.repository.ArticleRepository;
+import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleResponse;
 import com.playdata.kafka.QuestionProducer;
@@ -35,12 +36,12 @@ public class ArticleService {
 
 
 
-//    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
-//    {
-//        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
-//        return getArticleByCategory;
-//
-//    }
+    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
+    {
+        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
+        return getArticleByCategory;
+
+    }
     // id로 article 찾아옴
     public Article findById(Long id)
     {
