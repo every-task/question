@@ -3,6 +3,7 @@ package com.playdata.article.controller;
 import com.playdata.article.service.ArticleService;
 import com.playdata.config.TokenInfo;
 import com.playdata.domain.article.entity.Article;
+import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleResponse;
 import lombok.RequiredArgsConstructor;
@@ -47,12 +48,12 @@ public class ArticleController {
 
     }
     //질문 카테고리 조회
-//    @GetMapping("/category")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<ArticleResponse> getByCategory(@RequestBody ArticleCategoryRequest articleCategoryRequest)
-//    {
-//        return articleService.getByCategory(articleCategoryRequest);
-//    }
+    @GetMapping("/category")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ArticleResponse> getByCategory(@RequestBody ArticleCategoryRequest articleCategoryRequest)
+    {
+        return articleService.getByCategory(articleCategoryRequest);
+    }
 //    질문 상세 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
