@@ -3,6 +3,7 @@ package com.playdata.domain.article.response;
 import com.playdata.domain.article.dto.ArticleDto;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.comment.dto.CommentDto;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class ArticleResponse extends ArticleDto {
 //    private List<?> commentList;
     private List<CommentDto> comments;
 
-//    @QueryProjection
+    @QueryProjection
     public ArticleResponse(Article article)
     {
         super(article);
