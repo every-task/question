@@ -2,6 +2,7 @@ package com.playdata.domain.article.repository;
 
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
+import com.playdata.domain.article.response.ArticleDetailResponse;
 import com.playdata.domain.article.response.ArticleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
