@@ -1,13 +1,14 @@
 package com.playdata.domain.article.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 
-@Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
 public class ArticleCategoryRequest {
-    private String catecory;
+    private String category;
 }
