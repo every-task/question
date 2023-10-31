@@ -7,6 +7,8 @@ import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +31,28 @@ public class ArticleController {
         articleService.insert(articleRequest, tokenInfo.getId());
     }
 
-    @GetMapping
+//    @GetMapping
+//    //질문 조회
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<ArticleResponse> getAll()
+//    {
+//        return articleService.getAll();
+//    }
+
     //질문 조회
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ArticleResponse> getAll()
+    public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")Integer page,
+                                        @RequestParam(value="size", required = false, defaultValue = "10")Integer size,
+                                        ArticleCategoryRequest articleCategoryRequest)
     {
-        return articleService.getAll();
+        return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
     }
+
+
+
+
+
     //질문 삭제
     @DeleteMapping("{id}")
     public void deleteArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id)
@@ -49,13 +66,13 @@ public class ArticleController {
         return articleService.updateArticle(tokenInfo,id,articleRequest);
 
     }
-    //질문 카테고리 조회
-    @GetMapping("/category")
-    @ResponseStatus(HttpStatus.OK)
-    public List<ArticleResponse> getByCategory(@RequestBody ArticleCategoryRequest articleCategoryRequest)
-    {
-        return articleService.getByCategory(articleCategoryRequest);
-    }
+//    //질문 카테고리 조회
+//    @GetMapping("/category")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<ArticleResponse> getByCategory(@RequestBody ArticleCategoryRequest articleCategoryRequest)
+//    {
+//        return articleService.getByCategory(articleCategoryRequest);
+//    }
 //    질문 상세 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
