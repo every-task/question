@@ -14,12 +14,14 @@ import java.util.UUID;
 public class ArticleRequest {
     private String content;
     private String title;
+    private String category;
     public Article toEntity(UUID memberId)
     {
         return Article
                 .builder()
                 .content(content)
                 .title(title)
+                .category(category)
                 .member(Member.builder().id(memberId).build())
                 .build();
     }
