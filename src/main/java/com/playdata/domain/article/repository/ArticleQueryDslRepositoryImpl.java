@@ -1,8 +1,11 @@
 package com.playdata.domain.article.repository;
 
 import com.playdata.domain.article.entity.Article;
+import com.playdata.domain.article.entity.QArticle;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
+import com.playdata.domain.article.response.ArticleDetailResponse;
 import com.playdata.domain.article.response.ArticleResponse;
+
 
 import com.playdata.domain.article.response.QArticleResponse;
 import com.querydsl.core.BooleanBuilder;
@@ -33,6 +36,7 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
 
     @Override
     public Page<ArticleResponse> getArticleByCategory(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
+        //수정해서 query를 적게 치게 끔 변경 필요
         JPAQuery<ArticleResponse> query =jpaQueryFactory.select(new QArticleResponse(article))
                 .from(article).where((isCategory(articleCategoryRequest.getCategory())
                         )
