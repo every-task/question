@@ -2,12 +2,15 @@
 GET http://localhost:8082/api/v1/question/article
 Accept: application/json
 
+
 ### insertArticle(질문 작성)
 POST http://localhost:8082/api/v1/question/article
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Im5pY2tuYW1lIiwiaWQiOiI5NjlkZDlhMi0wMWM3LTRhZjQtODFkOS01ZWFmZjk0MjMwNDQiLCJwcm9maWxlSW1hZ2VVcmwiOiJwcm9maWxlSW1hZ2VVcmwiLCJlbWFpbCI6IjIiLCJleHAiOjE2OTg2NDA3ODN9.hTGyKHXJDiYGImGNLFwnrnbSFkOfCLeC5b-N9k2VSAo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Im5pY2tuYW1lIiwiaWQiOiI5NGRmZjQ0OS04MmU4LTQ4OGQtOWM4Ni01MTE4ZjI0ZTI5MjEiLCJwcm9maWxlSW1hZ2VVcmwiOiJwcm9maWxlSW1hZ2VVcmwiLCJlbWFpbCI6IjYiLCJleHAiOjE2OTg3NDc2ODl9.6MJ5Rwmr8vllzoBmDgL1D9Y72ghsRq3GqJVzFSwRHgU
 Content-Type: application/json
 
 {
+  "category": "공부",
+  "difficulty": "어려움",
   "title" : "질문입니다.",
   "content": "알려주세요"
 

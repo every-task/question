@@ -10,6 +10,8 @@ import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleResponse;
 import com.playdata.kafka.QuestionProducer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,20 +31,25 @@ public class ArticleService {
     }
 
 
-    public List<ArticleResponse> getAll()
+//    public List<ArticleResponse> getAll()
+//    {
+//        List<Article> getArticles = articleRepository.findAll();
+//        return getArticles.stream().map(ArticleResponse::new).toList();
+//    }
+    public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest)
     {
-        List<Article> getArticles = articleRepository.findAll();
-        return getArticles.stream().map(ArticleResponse::new).toList();
+        return articleRepository.getArticleByCategory(pageRequest,articleCategoryRequest);
     }
 
 
 
-    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
-    {
-        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
-        return getArticleByCategory;
 
-    }
+//    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
+//    {
+//        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
+//        return getArticleByCategory;
+//
+//    }
     // id로 article 찾아옴
     public Article findById(Long id)
     {
