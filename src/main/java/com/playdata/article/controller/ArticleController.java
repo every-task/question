@@ -5,6 +5,7 @@ import com.playdata.config.TokenInfo;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
+import com.playdata.domain.article.response.ArticleDetailResponse;
 import com.playdata.domain.article.response.ArticleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ import java.util.List;
 //추후 수정 mapping 주소
 @RequestMapping("/api/v1/question/article")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 
 public class ArticleController {
     private final ArticleService articleService;
@@ -43,8 +44,8 @@ public class ArticleController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")Integer page,
-                                        @RequestParam(value="size", required = false, defaultValue = "10")Integer size,
-                                        ArticleCategoryRequest articleCategoryRequest)
+                                                       @RequestParam(value="size", required = false, defaultValue = "10")Integer size,
+                                                       ArticleCategoryRequest articleCategoryRequest)
     {
         return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
     }
@@ -76,7 +77,7 @@ public class ArticleController {
 //    질문 상세 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ArticleResponse getById(@PathVariable("id")Long id)
+    public ArticleDetailResponse getById(@PathVariable("id")Long id)
     {
         return articleService.getById(id);
     }

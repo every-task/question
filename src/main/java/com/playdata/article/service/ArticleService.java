@@ -7,6 +7,7 @@ import com.playdata.domain.article.kafka.ArticleKafka;
 import com.playdata.domain.article.repository.ArticleRepository;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
+import com.playdata.domain.article.response.ArticleDetailResponse;
 import com.playdata.domain.article.response.ArticleResponse;
 import com.playdata.kafka.QuestionProducer;
 import lombok.RequiredArgsConstructor;
@@ -59,10 +60,10 @@ public class ArticleService {
         return article;
     }
 //    상세 article
-    public ArticleResponse getById(Long id)
+    public ArticleDetailResponse getById(Long id)
     {
         Article article =findById(id);
-        return new ArticleResponse(article);
+        return new ArticleDetailResponse(article);
     }
 
     public void deleteById(TokenInfo tokenInfo,Long id)

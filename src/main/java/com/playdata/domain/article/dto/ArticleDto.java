@@ -12,10 +12,12 @@ public class ArticleDto {
     private Long id;
     private String title;
     private String content;
+    private String category;
 
     public ArticleDto(Article article) {
         this.id = article.getId();
         this.title = article.getTitle();
         this.content = article.getContent();
+        this.category = article.getCategory();
     }
 }
