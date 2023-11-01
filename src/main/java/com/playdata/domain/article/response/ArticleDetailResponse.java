@@ -4,6 +4,7 @@ import com.playdata.domain.article.dto.ArticleDto;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.comment.dto.CommentDto;
 import com.playdata.domain.comment.response.CommentResponse;
+import com.playdata.domain.member.dto.MemberDto;
 import com.playdata.domain.member.entity.Member;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
@@ -17,12 +18,12 @@ import java.util.List;
 public class ArticleDetailResponse extends ArticleDto {
 
     private List<CommentDto> comments;
-    private Member member;
+    private MemberDto member;
 
     public ArticleDetailResponse(Article article)
     {
         super(article);
-        this.member=article.getMember();
+        this.member=new MemberDto(article.getMember());
         this.comments = article.getComments() != null ?
                 article.getComments()
                         .stream()
