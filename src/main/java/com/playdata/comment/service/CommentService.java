@@ -1,12 +1,15 @@
 package com.playdata.comment.service;
 
+import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.repository.ArticleRepository;
 import com.playdata.domain.comment.repository.CommentRepository;
 import com.playdata.domain.comment.request.CommentRequest;
+import com.playdata.exception.NoArticleByIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -17,9 +20,8 @@ public class CommentService {
     @PostMapping
     public void insertComment(CommentRequest commentRequest, Long articleId, UUID memberId)
     {
-//        Optional<Article> isArticleNull = articleRepository.findArticleByIdToDelete(commentRequest.getArticleId());
-//        Article article=isArticleNull.orElseThrow(()->new RuntimeException("없음"));
-//        commentRepository.save(commentRequest.toEntity(article));
+        Optional<Article> isArticleNull = articleRepository.findById(articleId);
+        isArticleNull.orElseThrow(()->new NoArticleByIdException("작성할 질문글이 없습니다."));
         commentRepository.save(commentRequest.toEntity(memberId, articleId));
     }
 
