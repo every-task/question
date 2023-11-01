@@ -2,6 +2,7 @@ package com.playdata.article.controller;
 
 import com.playdata.article.service.ArticleService;
 import com.playdata.config.TokenInfo;
+import com.playdata.exception.NotCorrectTokenIdException;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
@@ -13,8 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 //추후 수정 mapping 주소
@@ -32,14 +31,6 @@ public class ArticleController {
         articleService.insert(articleRequest, tokenInfo.getId());
     }
 
-//    @GetMapping
-//    //질문 조회
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<ArticleResponse> getAll()
-//    {
-//        return articleService.getAll();
-//    }
-
     //질문 조회
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -50,30 +41,22 @@ public class ArticleController {
         return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
     }
 
-
-
-
-
     //질문 삭제
     @DeleteMapping("{id}")
-    public void deleteArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id)
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id) throws NotCorrectTokenIdException
     {
         articleService.deleteById(tokenInfo,id);
     }
     //질문 수정
     @PutMapping("{id}")
-    public Article updateArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id , @RequestBody ArticleRequest articleRequest)
+    @ResponseStatus(HttpStatus.OK)
+    public Article updateArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id , @RequestBody ArticleRequest articleRequest) throws NotCorrectTokenIdException
     {
         return articleService.updateArticle(tokenInfo,id,articleRequest);
 
     }
-//    //질문 카테고리 조회
-//    @GetMapping("/category")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<ArticleResponse> getByCategory(@RequestBody ArticleCategoryRequest articleCategoryRequest)
-//    {
-//        return articleService.getByCategory(articleCategoryRequest);
-//    }
+
 //    질문 상세 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
