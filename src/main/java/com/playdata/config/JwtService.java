@@ -15,6 +15,7 @@ public class JwtService {
                 .setSigningKey(secretKey.getBytes())
                 .build()
                 .parse(token)
+                //여기서 발생하니까 잡아주면 됨
                 .getBody();
 
         return TokenInfo.builder()
