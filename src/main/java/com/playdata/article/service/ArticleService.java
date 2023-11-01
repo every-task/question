@@ -1,7 +1,8 @@
 package com.playdata.article.service;
 
 import com.playdata.config.TokenInfo;
-import com.playdata.config.exception.NoArticleById;
+import com.playdata.exception.NoArticleByIdException;
+import com.playdata.exception.NotCorrectTokenIdException;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.kafka.ArticleKafka;
 import com.playdata.domain.article.repository.ArticleRepository;
@@ -14,8 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,35 +29,22 @@ public class ArticleService {
     public void insert(ArticleRequest articleRequest, UUID memberId)
     {
         Article save = articleRepository.save(articleRequest.toEntity(memberId));
+        //send 실패
         questionProducer.send(ArticleKafka.of(save));
     }
 
-
-//    public List<ArticleResponse> getAll()
-//    {
-//        List<Article> getArticles = articleRepository.findAll();
-//        return getArticles.stream().map(ArticleResponse::new).toList();
-//    }
     public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest)
     {
         return articleRepository.getArticleByCategory(pageRequest,articleCategoryRequest);
     }
 
 
-
-
-//    public List<ArticleResponse> getByCategory(ArticleCategoryRequest articleCategoryRequest)
-//    {
-//        List<ArticleResponse> getArticleByCategory = articleRepository.getArticleByCategory(articleCategoryRequest);
-//        return getArticleByCategory;
-//
-//    }
     // id로 article 찾아옴
     public Article findById(Long id)
     {
         //예외처리 없을 경우
         Optional<Article> isIdNull = articleRepository.findById(id);
-        Article article =isIdNull.orElseThrow(()->new NoArticleById("회원이 없습니다."));
+        Article article =isIdNull.orElseThrow(()->new NoArticleByIdException("글이 존재하지 않습니다."));
         return article;
     }
 //    상세 article
@@ -66,30 +54,35 @@ public class ArticleService {
         return new ArticleDetailResponse(article);
     }
 
-    public void deleteById(TokenInfo tokenInfo,Long id)
+    @Transactional
+    public void deleteById(TokenInfo tokenInfo, Long id) throws NotCorrectTokenIdException
     {
+        //삭제하려는데 토큰에서 가져온 user정보와 작성글 user정보가 맞지 않는 상황은 지워지면 안된다.
         Article article = findById(id);
-        if(tokenInfo.getId().equals(article.getId()))
+        if(tokenInfo.getId().equals(article.getMember().getId()))
         {
             articleRepository.deleteById(article.getId());
         }
         //예외 exception 발생
         else {
-
+            throw new NotCorrectTokenIdException("맞지 않는 사용자로 삭제 할 수 없습니다.");
         }
     }
     //update
-    public Article updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article)
+    @Transactional
+    public Article updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article) throws NotCorrectTokenIdException
     {
         Article article1 = findById(id);
-        if(tokenInfo.getId().equals(article1.getId()))
+        if(tokenInfo.getId().equals(article1.getMember().getId()))
         {
             article1.setContent(article.getContent());
             article1.setTitle(article.getTitle());
             return article1;
         }
+        else {
+            throw new NotCorrectTokenIdException("맞지 않는 사용자로 수정 할 수 없습니다.");
+        }
         //예외 exception
-        return null;
     }
 
 
