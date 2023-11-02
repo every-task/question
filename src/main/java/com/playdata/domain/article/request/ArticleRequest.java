@@ -1,6 +1,7 @@
 package com.playdata.domain.article.request;
 
 import com.playdata.domain.article.entity.Article;
+import com.playdata.domain.article.entity.Category;
 import com.playdata.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class ArticleRequest {
     private String content;
     private String title;
-    private String category;
+    private Category category;
     public Article toEntity(UUID memberId)
     {
         return Article
