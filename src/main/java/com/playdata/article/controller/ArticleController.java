@@ -2,6 +2,7 @@ package com.playdata.article.controller;
 
 import com.playdata.article.service.ArticleService;
 import com.playdata.config.TokenInfo;
+import com.playdata.domain.article.entity.Category;
 import com.playdata.exception.NotCorrectTokenIdException;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
@@ -14,6 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 //추후 수정 mapping 주소
@@ -35,9 +39,15 @@ public class ArticleController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")Integer page,
-                                                       @RequestParam(value="size", required = false, defaultValue = "10")Integer size,
-                                                       ArticleCategoryRequest articleCategoryRequest)
+                                        @RequestParam(value="size", required = false, defaultValue = "10")Integer size,
+                                        @RequestParam(value="category", required = false)  List<String> category)
     {
+        if(category==null) {
+            List<String> category2 = new ArrayList<>();
+            ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category2.stream().map(Category::valueOf).toList());
+            return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
+        }
+        ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category.stream().map(Category::valueOf).toList());
         return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
     }
 
@@ -51,19 +61,16 @@ public class ArticleController {
     //질문 수정
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Article updateArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id , @RequestBody ArticleRequest articleRequest) throws NotCorrectTokenIdException
-    {
+    public Article updateArticle(@AuthenticationPrincipal TokenInfo tokenInfo,
+                                 @PathVariable Long id ,
+                                 @RequestBody ArticleRequest articleRequest) throws NotCorrectTokenIdException {
         return articleService.updateArticle(tokenInfo,id,articleRequest);
-
     }
 
 //    질문 상세 조회
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ArticleDetailResponse getById(@PathVariable("id")Long id)
-    {
+    public ArticleDetailResponse getById(@PathVariable("id")Long id) {
         return articleService.getById(id);
     }
-
-
 }
