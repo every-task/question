@@ -10,6 +10,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 //@AllArgsConstructor
@@ -27,7 +28,7 @@ public class ArticleDetailResponse extends ArticleDto {
         this.comments = article.getComments() != null ?
                 article.getComments()
                         .stream()
-                        .map(CommentDto::new).toList() :new ArrayList<>();
+                        .map(CommentDto::new).toList() : Collections.emptyList();
 
     }
 }
