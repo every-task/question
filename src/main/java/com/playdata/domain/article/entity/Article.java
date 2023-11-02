@@ -24,7 +24,8 @@ public class Article extends BaseEntity {
     private String title;
     private String content;
 
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @OneToMany(mappedBy = "article")
     private List<Comment> comments;
