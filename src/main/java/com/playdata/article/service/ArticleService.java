@@ -39,10 +39,10 @@ public class ArticleService {
     }
 
 
+
     // id로 article 찾아옴
     public Article findById(Long id)
     {
-        //예외처리 없을 경우
         Optional<Article> isIdNull = articleRepository.findById(id);
         Article article =isIdNull.orElseThrow(()->new NoArticleByIdException("글이 존재하지 않습니다."));
         return article;
@@ -63,7 +63,6 @@ public class ArticleService {
         {
             articleRepository.deleteById(article.getId());
         }
-        //예외 exception 발생
         else {
             throw new NotCorrectTokenIdException("맞지 않는 사용자로 삭제 할 수 없습니다.");
         }
@@ -82,7 +81,6 @@ public class ArticleService {
         else {
             throw new NotCorrectTokenIdException("맞지 않는 사용자로 수정 할 수 없습니다.");
         }
-        //예외 exception
     }
 
 

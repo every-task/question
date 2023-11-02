@@ -5,11 +5,11 @@ Accept: application/json
 
 ### insertArticle(질문 작성)
 POST http://localhost:8082/api/v1/question/article
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Im5pY2tuYW1lIiwiaWQiOiI1ZjM4Y2JiMy0xNWM1LTQ5YzMtYjM5Yi1kNTk0MWY5ZjZkZTIiLCJwcm9maWxlSW1hZ2VVcmwiOiJwcm9maWxlSW1hZ2VVcmwiLCJlbWFpbCI6IjIiLCJleHAiOjE2OTg4MzA3MTV9.c6-9uPVo7HSDS0tjzJ4w0P3m0pVabLJ-G6a_0DukSIo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuydtO2DnOybhSIsImlkIjoiN2Q4MDE0Y2EtMzQ2NS00OTIxLWEzNGMtM2EzMGJkOGE5NWRjIiwicHJvZmlsZUltYWdlVXJsIjoicHJvZmlsZUltYWdlVXJsIiwiZW1haWwiOiI0IiwiZXhwIjoxNjk4ODk0MTk0fQ.VkTRQ1Ijz1bv3Gt1r3md01yBFfLmFj2BwC8jHS00nxs
 Content-Type: application/json
 
 {
-  "category": "공부",
+  "category": "EMPLOYMENT",
   "difficulty": "어려움",
   "title" : "질문입니다.",
   "content": "알려주세요"
@@ -17,11 +17,11 @@ Content-Type: application/json
 }
 
 ### deleteArticle(질문 삭제)
-DELETE http://localhost:8082/api/v1/question/article/10
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Im5pY2tuYW1lIiwiaWQiOiI1ZjM4Y2JiMy0xNWM1LTQ5YzMtYjM5Yi1kNTk0MWY5ZjZkZTIiLCJwcm9maWxlSW1hZ2VVcmwiOiJwcm9maWxlSW1hZ2VVcmwiLCJlbWFpbCI6IjIiLCJleHAiOjE2OTg4MzA3MTV9.c6-9uPVo7HSDS0tjzJ4w0P3m0pVabLJ-G6a_0DukSIo
+DELETE http://localhost:8082/api/v1/question/article/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuydtO2DnOybhSIsImlkIjoiN2Q4MDE0Y2EtMzQ2NS00OTIxLWEzNGMtM2EzMGJkOGE5NWRjIiwicHJvZmlsZUltYWdlVXJsIjoicHJvZmlsZUltYWdlVXJsIiwiZW1haWwiOiI0IiwiZXhwIjoxNjk4ODk0MTk0fQ.VkTRQ1Ijz1bv3Gt1r3md01yBFfLmFj2BwC8jHS00nxs
 
 ### findArticleById(질문 상세조회)
-GET http://localhost:8082/api/v1/question/article/1
+GET http://localhost:8082/api/v1/question/article/3
 Accept: application/json
 
 ### updateArticleById(질문 업데이트)
@@ -35,9 +35,9 @@ Content-Type: application/json
 }
 
 ### insertComment(댓글 등록)
-POST http://localhost:8082/api/v1/question/comment/9
+POST http://localhost:8082/api/v1/question/comment/3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Im5pY2tuYW1lIiwiaWQiOiI1ZjM4Y2JiMy0xNWM1LTQ5YzMtYjM5Yi1kNTk0MWY5ZjZkZTIiLCJwcm9maWxlSW1hZ2VVcmwiOiJwcm9maWxlSW1hZ2VVcmwiLCJlbWFpbCI6IjIiLCJleHAiOjE2OTg4MzA3MTV9.c6-9uPVo7HSDS0tjzJ4w0P3m0pVabLJ-G6a_0DukSIo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuydtO2DnOybhSIsImlkIjoiN2Q4MDE0Y2EtMzQ2NS00OTIxLWEzNGMtM2EzMGJkOGE5NWRjIiwicHJvZmlsZUltYWdlVXJsIjoicHJvZmlsZUltYWdlVXJsIiwiZW1haWwiOiI0IiwiZXhwIjoxNjk4ODk0MTk0fQ.VkTRQ1Ijz1bv3Gt1r3md01yBFfLmFj2BwC8jHS00nxs
 
 {
   "content" : "수정입니다."
