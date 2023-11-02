@@ -38,8 +38,8 @@ public class ArticleController {
     //질문 조회
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")Integer page,
-                                        @RequestParam(value="size", required = false, defaultValue = "10")Integer size,
+    public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")int page,
+                                        @RequestParam(value="size", required = false, defaultValue = "10")int size,
                                         @RequestParam(value="category", required = false)  List<String> category)
     {
         if(category==null) {
