@@ -1,5 +1,8 @@
 package com.playdata.domain.article.request;
 
+import com.playdata.domain.article.entity.Category;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.util.List;
@@ -10,5 +13,5 @@ import java.util.List;
 @Builder
 @Getter
 public class ArticleCategoryRequest {
-    private String category;
+    private List<Category> category;
 }
