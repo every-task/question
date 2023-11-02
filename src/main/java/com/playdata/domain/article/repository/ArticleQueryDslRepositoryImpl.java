@@ -1,6 +1,7 @@
 package com.playdata.domain.article.repository;
 
 import com.playdata.domain.article.entity.Article;
+import com.playdata.domain.article.entity.Category;
 import com.playdata.domain.article.entity.QArticle;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.response.ArticleDetailResponse;
@@ -49,16 +50,16 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
         return new PageImpl(content,pageRequest,totalSize);
     }
 
-    private BooleanBuilder isCategory(String category){
+
+
+    private BooleanBuilder isCategory(List<Category> category){
         return category==null ? null : categoryOrCondition(category);
     }
 
-    private BooleanBuilder categoryOrCondition(String category) {
+    private BooleanBuilder categoryOrCondition(List<Category> category) {
         BooleanBuilder builder = new BooleanBuilder();
-        String[] strArr = category.split(","); // [s, a, m, p, l, e]
-        ArrayList<String> categoryTypes = new ArrayList<String>(Arrays.asList(strArr));
-        categoryTypes.stream().forEach(t -> builder.or(article.category.eq(t))); // 체크된 항목 or
-        return categoryTypes==null? null : builder;
+        category.stream().forEach(t->builder.or(article.category.eq(t)));
+        return category==null? null : builder;
     }
 
 

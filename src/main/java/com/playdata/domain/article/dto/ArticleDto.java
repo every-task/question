@@ -1,6 +1,7 @@
 package com.playdata.domain.article.dto;
 
 import com.playdata.domain.article.entity.Article;
+import com.playdata.domain.article.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +13,12 @@ public class ArticleDto {
     private Long id;
     private String title;
     private String content;
-    private String category;
+    private Category category;
 
     public ArticleDto(Article article) {
         this.id = article.getId();
         this.title = article.getTitle();
         this.content = article.getContent();
-        this.category = article.getCategory();
+        this.category=article.getCategory();
     }
 }
