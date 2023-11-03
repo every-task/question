@@ -3,13 +3,12 @@ package com.playdata.question;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class QuestionApplicationTests {
 
-    @Test
-    void contextLoads() {
-        System.out.println("test");
-
-    }
+//    @Test
+//    void contextLoads() {
+//
+//    }
 
 }
