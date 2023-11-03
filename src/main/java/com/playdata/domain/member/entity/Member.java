@@ -2,10 +2,7 @@ package com.playdata.domain.member.entity;
 
 import com.playdata.domain.article.entity.Article;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "member")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
     @Id
