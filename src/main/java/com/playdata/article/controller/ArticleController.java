@@ -28,6 +28,7 @@ import java.util.List;
 public class ArticleController {
     private final ArticleService articleService;
     //질문 등록
+    //
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void insert(@AuthenticationPrincipal TokenInfo tokenInfo, @RequestBody ArticleRequest articleRequest)
