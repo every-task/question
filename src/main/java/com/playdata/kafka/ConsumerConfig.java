@@ -11,6 +11,7 @@ import org.springframework.kafka.support.converter.RecordMessageConverter;
 @RequiredArgsConstructor
 public class ConsumerConfig {
     private final KafkaProperties kafkaProperties;
+    //
 
     @Bean
     public RecordMessageConverter converter() {
