@@ -31,6 +31,7 @@ public class ArticleService {
         Article save = articleRepository.save(articleRequest.toEntity(memberId));
         //send 실패
         questionProducer.send(ArticleKafka.of(save));
+        //
     }
 
     public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest)
