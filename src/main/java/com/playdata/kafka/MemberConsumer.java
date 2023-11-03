@@ -19,8 +19,10 @@ public class MemberConsumer {
     public void listen(MemberKafkaData data) {
         Optional<Member> member =memberRepository.findById(UUID.fromString(data.id()));
         if(member.isEmpty()) memberRepository.save(data.ToEntity());
-        Member member1 = member.get();
-        member1.setNickname(data.nickname());
-        member1.setProfileImageUrl(data.profileImageUrl());
+        else{
+            Member member1 = member.get();
+            member1.setNickname(data.nickname());
+            member1.setProfileImageUrl(data.profileImageUrl());
+        }
     }
 }
