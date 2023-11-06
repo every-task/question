@@ -37,9 +37,9 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
 
     @Override
     public Page<ArticleResponse> getArticleByCategory(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
-        //수정해서 query를 적게 치게 끔 변경 필요
         JPAQuery<ArticleResponse> query =jpaQueryFactory.select(new QArticleResponse(article))
                 .from(article)
+                .join(article.member)
                 .where((isCategory(articleCategoryRequest.getCategory())))
                 .offset(pageRequest.getPageNumber()* pageRequest.getPageSize())
                 .limit(pageRequest.getPageSize());

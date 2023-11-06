@@ -62,7 +62,7 @@ public class ArticleController {
     //질문 수정
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Article updateArticle(@AuthenticationPrincipal TokenInfo tokenInfo,
+    public ArticleResponse updateArticle(@AuthenticationPrincipal TokenInfo tokenInfo,
                                  @PathVariable Long id ,
                                  @RequestBody ArticleRequest articleRequest) throws NotCorrectTokenIdException {
         return articleService.updateArticle(tokenInfo,id,articleRequest);

@@ -45,7 +45,7 @@ public class ArticleService {
     public Article findById(Long id)
     {
         Optional<Article> isIdNull = articleRepository.findById(id);
-        Article article =isIdNull.orElseThrow(()->new NoArticleByIdException("글이 존재하지 않습니다."));
+        Article article =isIdNull.orElseThrow(()->new NoArticleByIdException("error 500"));
         return article;
     }
 //    상세 article
@@ -58,29 +58,29 @@ public class ArticleService {
     @Transactional
     public void deleteById(TokenInfo tokenInfo, Long id) throws NotCorrectTokenIdException
     {
-        //삭제하려는데 토큰에서 가져온 user정보와 작성글 user정보가 맞지 않는 상황은 지워지면 안된다.
         Article article = findById(id);
         if(tokenInfo.getId().equals(article.getMember().getId()))
         {
             articleRepository.deleteById(article.getId());
         }
         else {
-            throw new NotCorrectTokenIdException("맞지 않는 사용자로 삭제 할 수 없습니다.");
+            throw new NotCorrectTokenIdException("error 401");
         }
     }
     //update
     @Transactional
-    public Article updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article) throws NotCorrectTokenIdException
+    public ArticleResponse updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article) throws NotCorrectTokenIdException
     {
         Article article1 = findById(id);
         if(tokenInfo.getId().equals(article1.getMember().getId()))
         {
             article1.setContent(article.getContent());
             article1.setTitle(article.getTitle());
-            return article1;
+            article1.setCategory(article.getCategory());
+            return new ArticleResponse(article1);
         }
         else {
-            throw new NotCorrectTokenIdException("맞지 않는 사용자로 수정 할 수 없습니다.");
+            throw new NotCorrectTokenIdException("error 401");
         }
     }
 
