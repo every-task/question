@@ -9,6 +9,7 @@ import lombok.*;
 @Entity
 @Table(name = "comment")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
