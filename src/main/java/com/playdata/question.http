@@ -5,11 +5,11 @@ Accept: application/json
 
 ### insertArticle(질문 작성)
 POST http://localhost:8082/api/v1/question/article
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Ik5pY2tuYW1lMTIzNCIsImlkIjoiOThlY2ZlYzAtOWM2OS00NjEwLWE2M2YtODAwYzY4MDEwYjdkIiwicHJvZmlsZUltYWdlVXJsIjoicHJvZmlsZUltYWdlVXJsIiwiZW1haWwiOiI5IiwiZXhwIjoxNjk4OTIyMTYyfQ.UPfEmwp2NL3iD7PnFQ8CcY4EsWd2ajWAbBAaWd1W-4E
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuuwlOq_iCIsImlkIjoiYjJmYTBkZmItZDE5My00YjAyLTk0MDYtMzYzMDYwOWNkM2U4IiwicHJvZmlsZUltYWdlVXJsIjoi67CU6r-IIiwiZW1haWwiOiIyMSIsImV4cCI6MTY5OTI2MzMyOX0.br3fzParrtZXh669Ct4dMjZhs2tdnuwPHdskaNH4VMM
 Content-Type: application/json
 
 {
-  "category": "ART",
+  "category": "STRESS",
   "difficulty": "어려움",
   "title" : "시험기간이 2주 남은 대학생입니다. 이번에는 꼭 장학금을 받고 싶은데 어떻게 해야할까요?",
   "content": "시험공부를 하면서 학점 4.0 이상을 넘어서 장학금을 받고 싶습니다. 학교다니면서 알바까지 하는게 너무 힘듭니다. 받아보신 분들께서 좋은 팁 부탁드립니다."
@@ -17,28 +17,36 @@ Content-Type: application/json
 }
 
 ### deleteArticle(질문 삭제)
-DELETE http://localhost:8082/api/v1/question/article/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuydtO2DnOybhSIsImlkIjoiN2Q4MDE0Y2EtMzQ2NS00OTIxLWEzNGMtM2EzMGJkOGE5NWRjIiwicHJvZmlsZUltYWdlVXJsIjoicHJvZmlsZUltYWdlVXJsIiwiZW1haWwiOiI0IiwiZXhwIjoxNjk4ODk0MTk0fQ.VkTRQ1Ijz1bv3Gt1r3md01yBFfLmFj2BwC8jHS00nxs
+DELETE http://localhost:8082/api/v1/question/article/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuuwlOq_iCIsImlkIjoiYjJmYTBkZmItZDE5My00YjAyLTk0MDYtMzYzMDYwOWNkM2U4IiwicHJvZmlsZUltYWdlVXJsIjoi67CU6r-IIiwiZW1haWwiOiIyMSIsImV4cCI6MTY5OTI0NjM4OX0.v3BLfYhc0I-pMzEhQyhdYpNUqCggWxg2Cn5D3fRFAJs
 
 ### findArticleById(질문 상세조회)
-GET http://localhost:8082/api/v1/question/article/3
+GET http://localhost:8082/api/v1/question/article/4
 Accept: application/json
 
-### updateArticleById(질문 업데이트)
-PUT http://localhost:8082/api/v1/question/article/3
+### updateArticle(질문 업데이트)
+PUT http://localhost:8082/api/v1/question/article/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuuwlOq_iCIsImlkIjoiYjJmYTBkZmItZDE5My00YjAyLTk0MDYtMzYzMDYwOWNkM2U4IiwicHJvZmlsZUltYWdlVXJsIjoi67CU6r-IIiwiZW1haWwiOiIyMSIsImV4cCI6MTY5OTI2MzMyOX0.br3fzParrtZXh669Ct4dMjZhs2tdnuwPHdskaNH4VMM
 Content-Type: application/json
 
 {
-  "title" : "변경입니다.",
-  "content": "바꿔주세요"
+  "category": "ART",
+  "difficulty": "d",
+  "title" : "d",
+  "content": "d"
 
 }
 
 ### insertComment(댓글 등록)
 POST http://localhost:8082/api/v1/question/comment/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6Ik5pY2tuYW1lMTIzNCIsImlkIjoiOThlY2ZlYzAtOWM2OS00NjEwLWE2M2YtODAwYzY4MDEwYjdkIiwicHJvZmlsZUltYWdlVXJsIjoicHJvZmlsZUltYWdlVXJsIiwiZW1haWwiOiI5IiwiZXhwIjoxNjk4OTA4MTQ0fQ.yG7C1ANeIBzMRRl60KHbbyKJj09h-NkQ32GEb6TJQTc
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuuwlOq_iCIsImlkIjoiYjJmYTBkZmItZDE5My00YjAyLTk0MDYtMzYzMDYwOWNkM2U4IiwicHJvZmlsZUltYWdlVXJsIjoi67CU6r-IIiwiZW1haWwiOiIyMSIsImV4cCI6MTY5OTI2MzMyOX0.br3fzParrtZXh669Ct4dMjZhs2tdnuwPHdskaNH4VMM
+
 
 {
   "content" : "수정입니다."
 }
+
+### deleteComment(댓글 삭제)
+DELETE http://localhost:8082/api/v1/question/comment/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuuwlOq_iCIsImlkIjoiYjJmYTBkZmItZDE5My00YjAyLTk0MDYtMzYzMDYwOWNkM2U4IiwicHJvZmlsZUltYWdlVXJsIjoi67CU6r-IIiwiZW1haWwiOiIyMSIsImV4cCI6MTY5OTI2MzMyOX0.br3fzParrtZXh669Ct4dMjZhs2tdnuwPHdskaNH4VMM
