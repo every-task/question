@@ -36,8 +36,6 @@ public class CommentService {
         Optional<Comment> getCommentById = commentRepository.findById(id);
         Comment comment=getCommentById.orElseThrow(()-> new NoArticleByIdException("error 500"));
         if(tokenInfo.getId().equals(comment.getMember().getId())) {
-            comment.setMember(null);
-            comment.setArticle(null);
             commentRepository.deleteById(id);
         }
         else {
