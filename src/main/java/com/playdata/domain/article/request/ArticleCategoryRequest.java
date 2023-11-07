@@ -14,4 +14,5 @@ import java.util.List;
 @Getter
 public class ArticleCategoryRequest {
     private List<Category> category;
+    private String keyword;
 }
