@@ -41,14 +41,18 @@ public class ArticleController {
     @ResponseStatus(HttpStatus.OK)
     public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")int page,
                                         @RequestParam(value="size", required = false, defaultValue = "10")int size,
-                                        @RequestParam(value="category", required = false)  List<String> category)
+                                        @RequestParam(value="category", required = false)  List<String> category,
+                                        @RequestParam(value="keyword", required = false)String keyword)
     {
+        if(keyword==null) {
+            keyword="";
+        }
         if(category==null) {
             List<String> category2 = new ArrayList<>();
-            ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category2.stream().map(Category::valueOf).toList());
+            ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category2.stream().map(Category::valueOf).toList(),keyword);
             return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
         }
-        ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category.stream().map(Category::valueOf).toList());
+        ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category.stream().map(Category::valueOf).toList(),keyword);
         return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
     }
 
