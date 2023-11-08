@@ -17,12 +17,14 @@ public class CustomExceptionAdvice {
     @ExceptionHandler(NoArticleByIdException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String resourceNotFoundExceptionHandler(NoArticleByIdException e) {
+        log.error("No Ariticle Exception",e);
         return e.getMessage();
     }
     @ExceptionHandler(ExpiredJwtException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public void weakKeyExceptionHandler(ExpiredJwtException e){
-        log.error("error 401", e);
+    public String weakKeyExceptionHandler(ExpiredJwtException e){
+        log.error("Weakey Exception", e);
+        return e.getMessage();
     }
 
 

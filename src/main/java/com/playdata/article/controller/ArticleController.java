@@ -42,17 +42,15 @@ public class ArticleController {
     public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")int page,
                                         @RequestParam(value="size", required = false, defaultValue = "10")int size,
                                         @RequestParam(value="category", required = false)  List<String> category,
-                                        @RequestParam(value="keyword", required = false)String keyword)
+                                        @RequestParam(value="keyword", required = false, defaultValue = "")String keyword,
+                                        @RequestParam(value = "orderBy", required = false, defaultValue = "latest")String orderBy)
     {
-        if(keyword==null) {
-            keyword="";
-        }
         if(category==null) {
             List<String> category2 = new ArrayList<>();
-            ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category2.stream().map(Category::valueOf).toList(),keyword);
+            ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category2.stream().map(Category::valueOf).toList(),keyword,orderBy);
             return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
         }
-        ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category.stream().map(Category::valueOf).toList(),keyword);
+        ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category.stream().map(Category::valueOf).toList(),keyword,orderBy);
         return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
     }
 

@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article,Long>,ArticleQueryDslRepository {
-    @Query("select a.id,a.content,a.category,a.title,c.id,c.content, m.nickname,m.profileImageUrl from Article " +
-            "as a inner join a.comments as c inner join a.member as m where a.id=:id")
-    Optional<Article> findArticleById(Long id);
-
+//    @Query("select a.id,a.content,a.category,a.title, m.nickname,m.profileImageUrl from Article " +
+//            "as a left join a.member as m on a.member.id = m.id" +
+//            " where a.id=:id and a.deletedAt=null")
+//    Optional<Article> findArticleById(Long id);
+    Optional<Article> findByIdAndAndDeletedAtIsNull(Long id);
 
 }

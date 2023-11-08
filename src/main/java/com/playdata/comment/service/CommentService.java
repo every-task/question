@@ -26,30 +26,30 @@ public class CommentService {
     private final ArticleRepository articleRepository;
     public void insertComment(CommentRequest commentRequest, Long articleId, UUID memberId)
     {
-        Optional<Article> getArticleById = articleRepository.findById(articleId);
-        getArticleById.orElseThrow(()->new NoArticleByIdException("error 500"));
+        Optional<Article> getArticleById = articleRepository.findByIdAndAndDeletedAtIsNull(articleId);
+        getArticleById.orElseThrow(()->new NoArticleByIdException("No Article"));
         commentRepository.save(commentRequest.toEntity(memberId, articleId));
     }
     @Transactional
     public void deleteComment(TokenInfo tokenInfo, Long id)
     {
         Optional<Comment> getCommentById = commentRepository.findById(id);
-        Comment comment=getCommentById.orElseThrow(()-> new NoArticleByIdException("error 500"));
+        Comment comment=getCommentById.orElseThrow(()-> new NoArticleByIdException("No Comment"));
         if(tokenInfo.getId().equals(comment.getMember().getId())) {
-            commentRepository.deleteById(id);
+            comment.delete();
         }
         else {
-            new NotCorrectTokenIdException("error 401");
+            new NotCorrectTokenIdException("Not Correct Token");
         }
     }
     @Transactional
     public Comment updateComment(TokenInfo tokenInfo,Long id, CommentRequest commentRequest)
     {
         Optional<Comment> getCommentById = commentRepository.findById(id);
-        Comment comment=getCommentById.orElseThrow(()->new NoArticleByIdException("error 500"));
+        Comment comment=getCommentById.orElseThrow(()->new NoArticleByIdException("No Comment"));
         if(tokenInfo.getId().equals(comment.getMember().getId())) comment.setContent(commentRequest.content());
         else {
-            new NotCorrectTokenIdException("error 401");
+            new NotCorrectTokenIdException(("Not Correct Token"));
         }
         return comment;
     }
