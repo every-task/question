@@ -31,7 +31,6 @@ public class ArticleService {
         Article save = articleRepository.save(articleRequest.toEntity(memberId));
         //send 실패
         questionProducer.send(ArticleKafka.of(save));
-        //
     }
 
     public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest)
@@ -61,6 +60,7 @@ public class ArticleService {
         Article article = findById(id);
         if(tokenInfo.getId().equals(article.getMember().getId()))
         {
+            article.delete();
             articleRepository.deleteById(article.getId());
         }
         else {
