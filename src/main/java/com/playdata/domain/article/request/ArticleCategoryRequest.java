@@ -15,4 +15,5 @@ import java.util.List;
 public class ArticleCategoryRequest {
     private List<Category> category;
     private String keyword;
+    private String orderBy;
 }
