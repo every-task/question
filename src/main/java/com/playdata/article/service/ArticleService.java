@@ -1,6 +1,8 @@
 package com.playdata.article.service;
 
 import com.playdata.config.TokenInfo;
+import com.playdata.domain.comment.entity.Comment;
+import com.playdata.domain.comment.repository.CommentRepository;
 import com.playdata.exception.NoArticleByIdException;
 import com.playdata.exception.NotCorrectTokenIdException;
 import com.playdata.domain.article.entity.Article;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,8 +46,8 @@ public class ArticleService {
     // id로 article 찾아옴
     public Article findById(Long id)
     {
-        Optional<Article> isIdNull = articleRepository.findById(id);
-        Article article =isIdNull.orElseThrow(()->new NoArticleByIdException("error 500"));
+        Optional<Article>  findAriticleById = articleRepository.findByIdAndAndDeletedAtIsNull(id);
+        Article article = findAriticleById.orElseThrow(()-> new NoArticleByIdException("No Article"));
         return article;
     }
 //    상세 article
@@ -61,10 +64,9 @@ public class ArticleService {
         if(tokenInfo.getId().equals(article.getMember().getId()))
         {
             article.delete();
-            articleRepository.deleteById(article.getId());
         }
         else {
-            throw new NotCorrectTokenIdException("error 401");
+            throw new NotCorrectTokenIdException("Not Correct Token");
         }
     }
     //update
@@ -80,7 +82,7 @@ public class ArticleService {
             return new ArticleResponse(article1);
         }
         else {
-            throw new NotCorrectTokenIdException("error 401");
+            throw new NotCorrectTokenIdException("Not Correct Token");
         }
     }
 
