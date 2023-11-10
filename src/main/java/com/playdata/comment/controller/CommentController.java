@@ -8,10 +8,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/question/comment")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 
 public class CommentController {
     private final CommentService commentService;
@@ -22,6 +23,11 @@ public class CommentController {
                               @RequestBody CommentRequest commentRequest)
     {
         commentService.insertComment(commentRequest,articleId,tokenInfo.getId());
+    }
+    @GetMapping("/{articleId}")
+    public List<Comment> getAllCommentByArticleId(@PathVariable(value= "articleId")Long articleId)
+    {
+        return commentService.getAllCommentByArticleId(articleId);
     }
     @DeleteMapping("/{id}")
     public void deleteComment(@AuthenticationPrincipal TokenInfo tokenInfo,
