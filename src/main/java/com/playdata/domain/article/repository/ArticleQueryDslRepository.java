@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 public interface ArticleQueryDslRepository {
-    Page<ArticleResponse> getArticleByCategory(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest);
+    Page<ArticleResponse> getArticles(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest);
 
 }
