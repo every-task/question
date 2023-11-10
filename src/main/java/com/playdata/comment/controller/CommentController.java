@@ -24,11 +24,6 @@ public class CommentController {
     {
         commentService.insertComment(commentRequest,articleId,tokenInfo.getId());
     }
-    @GetMapping("/{articleId}")
-    public List<Comment> getAllCommentByArticleId(@PathVariable(value= "articleId")Long articleId)
-    {
-        return commentService.getAllCommentByArticleId(articleId);
-    }
     @DeleteMapping("/{id}")
     public void deleteComment(@AuthenticationPrincipal TokenInfo tokenInfo,
                               @PathVariable(value="id") Long id)
