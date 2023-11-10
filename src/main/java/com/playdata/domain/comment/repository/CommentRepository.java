@@ -12,9 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    @Query("select c.content ,m.nickname,m.profileImageUrl from Comment" +
-            " as c inner join c.member as m on c.member.id=m.id where c.article.id=:id")
-    List<Comment> findCommentsByArticleId(Long id);
+
 
 
 

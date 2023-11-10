@@ -14,6 +14,7 @@ import com.playdata.domain.article.response.ArticleDetailResponse;
 import com.playdata.domain.article.response.ArticleResponse;
 import com.playdata.kafka.QuestionProducer;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class ArticleService {
 
     public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest)
     {
-        return articleRepository.getArticleByCategory(pageRequest,articleCategoryRequest);
+        return articleRepository.getArticles(pageRequest,articleCategoryRequest);
     }
 
 
@@ -73,13 +74,13 @@ public class ArticleService {
     @Transactional
     public ArticleResponse updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article) throws NotCorrectTokenIdException
     {
-        Article article1 = findById(id);
-        if(tokenInfo.getId().equals(article1.getMember().getId()))
+        Article articleById = findById(id);
+        if(tokenInfo.getId().equals(articleById.getMember().getId()))
         {
-            article1.setContent(article.getContent());
-            article1.setTitle(article.getTitle());
-            article1.setCategory(article.getCategory());
-            return new ArticleResponse(article1);
+            articleById.setContent(article.getContent());
+            articleById.setTitle(article.getTitle());
+            articleById.setCategory(article.getCategory());
+            return new ArticleResponse(articleById);
         }
         else {
             throw new NotCorrectTokenIdException("Not Correct Token");

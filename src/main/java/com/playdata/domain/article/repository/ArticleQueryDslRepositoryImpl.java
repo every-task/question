@@ -34,7 +34,7 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
 
 
     @Override
-    public Page<ArticleResponse> getArticleByCategory(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
+    public Page<ArticleResponse> getArticles(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
         JPAQuery<ArticleResponse> query =jpaQueryFactory.select(new QArticleResponse(article))
                 .from(article)
                 .join(article.member)

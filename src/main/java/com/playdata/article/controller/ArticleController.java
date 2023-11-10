@@ -24,7 +24,6 @@ import java.util.List;
 //추후 수정 mapping 주소
 @RequestMapping("/api/v1/question/article")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 
 public class ArticleController {
     private final ArticleService articleService;
@@ -47,17 +46,24 @@ public class ArticleController {
     {
         if(category==null) {
             List<String> category2 = new ArrayList<>();
-            ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category2.stream().map(Category::valueOf).toList(),keyword,orderBy);
+            ArticleCategoryRequest articleCategoryRequest =
+                    new ArticleCategoryRequest
+                            (category2.stream().map(Category::valueOf)
+                            .toList(),keyword,orderBy);
             return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
         }
-        ArticleCategoryRequest articleCategoryRequest =new ArticleCategoryRequest(category.stream().map(Category::valueOf).toList(),keyword,orderBy);
+        ArticleCategoryRequest articleCategoryRequest =
+                new ArticleCategoryRequest
+                        (category.stream().map(Category::valueOf)
+                                .toList(),keyword,orderBy);
         return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
     }
 
     //질문 삭제
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteArticle(@AuthenticationPrincipal TokenInfo tokenInfo,@PathVariable Long id) throws NotCorrectTokenIdException
+    public void deleteArticle(@AuthenticationPrincipal TokenInfo tokenInfo,
+                              @PathVariable Long id) throws NotCorrectTokenIdException
     {
         articleService.deleteById(tokenInfo,id);
     }
@@ -65,8 +71,8 @@ public class ArticleController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public ArticleResponse updateArticle(@AuthenticationPrincipal TokenInfo tokenInfo,
-                                 @PathVariable Long id ,
-                                 @RequestBody ArticleRequest articleRequest) throws NotCorrectTokenIdException {
+                                        @PathVariable Long id ,
+                                        @RequestBody ArticleRequest articleRequest) throws NotCorrectTokenIdException {
         return articleService.updateArticle(tokenInfo,id,articleRequest);
     }
 
