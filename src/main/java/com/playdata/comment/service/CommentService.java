@@ -1,6 +1,6 @@
 package com.playdata.comment.service;
 
-import com.playdata.config.BaseEntity;
+
 import com.playdata.config.TokenInfo;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.repository.ArticleRepository;
@@ -10,11 +10,13 @@ import com.playdata.domain.comment.request.CommentRequest;
 import com.playdata.exception.NoArticleByIdException;
 import com.playdata.exception.NotCorrectTokenIdException;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 
 import java.util.Optional;
 import java.util.UUID;
