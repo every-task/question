@@ -9,7 +9,13 @@ import org.springframework.kafka.config.TopicBuilder;
 public class TopicConfig {
     public final static String QUESTION = "question"; //내가 발행한 토픽
     public final static String MEMBER = "member"; //내가 구독한 토픽
+    public final static String memberDLT = "member.DLT";
 
+    @Bean
+    public NewTopic memberDLT(){
+        return new NewTopic(memberDLT,1,(short) 1);
+
+    }
     @Bean
     public NewTopic question() {
         return TopicBuilder
@@ -17,10 +23,5 @@ public class TopicConfig {
                 .partitions(1)
                 .replicas(1)
                 .build();
-    }
-
-    @Bean
-    public NewTopic member() {
-        return new NewTopic(MEMBER, 1, (short) 1);
     }
 }
