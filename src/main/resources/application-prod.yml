@@ -20,3 +20,11 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
 server:
   port: 8082
+
+config:
+  client:
+    origin: http://34.41.194.136:80
+  password:
+    strength: 10
+  jwt:
+    secret: anfoawhfafawkefhbwkjlfeopwehfolawefh
