@@ -30,3 +30,12 @@ logging:
         type:
           descriptor:
             sql: trace
+
+
+config:
+  client:
+    origin: http://localhost:3000
+  password:
+    strength: 10
+  jwt:
+    secret: anfoawhfafawkefhbwkjlfeopwehfolawefh
