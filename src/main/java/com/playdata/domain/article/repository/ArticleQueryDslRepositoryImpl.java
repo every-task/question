@@ -1,5 +1,6 @@
 package com.playdata.domain.article.repository;
 
+import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.entity.Category;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.response.ArticleResponse;
@@ -35,9 +36,10 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
 
     @Override
     public Page<ArticleResponse> getArticles(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
-        JPAQuery<ArticleResponse> query =jpaQueryFactory.select(new QArticleResponse(article))
+        JPAQuery<Article> query =jpaQueryFactory.select(article)
                 .from(article)
-                .join(article.member)
+                .leftJoin(article.member)
+                .fetchJoin()
                 .where((findExistCategory(articleCategoryRequest.getCategory()))
                 ,article.isDeleted.eq(false)
                 ,(findExistKeywordInTitle(articleCategoryRequest.getKeyword())
@@ -46,17 +48,18 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
                 .orderBy(createOrderSpecifier(articleCategoryRequest.getOrderBy()))
                 .offset(pageRequest.getPageNumber()* pageRequest.getPageSize())
                 .limit(pageRequest.getPageSize());
-                List<ArticleResponse> content = query.fetch();
+                List<Article> content = query.fetch();
                 Long totalSize =jpaQueryFactory.select(article.count())
-                .from(article)
-                        .join(article.member)
+                        .from(article)
                         .where((findExistCategory(articleCategoryRequest.getCategory()))
                                 ,article.isDeleted.eq(false)
                                 ,(findExistKeywordInTitle(articleCategoryRequest.getKeyword())
                                         .or(findExistKeyWordInContent(articleCategoryRequest.getKeyword()))
                                         .or(findExistKeyWordInNickName(articleCategoryRequest.getKeyword()))))
                 .fetchOne();
-        return new PageImpl(content,pageRequest,totalSize);
+        PageImpl<Article> articlesList = new PageImpl<>(content, pageRequest, totalSize);
+        Page<ArticleResponse> map = articlesList.map(ArticleResponse::new);
+        return map;
     }
 
 
