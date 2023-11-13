@@ -1,31 +1,56 @@
 ### getAllArticle (질문 조회)
-GET http://localhost:8082/api/v1/question/article
+GET http://localhost:8080/api/v1/question/article
+Accept: application/json
+
+### getAllArticle (질문 조회)
+GET http://localhost:8100/api/v1/story
 Accept: application/json
 
 
 ### insertArticle(질문 작성)
-POST http://localhost:8082/api/v1/question/article
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuyCrOyekCIsImlkIjoiMTI1MGI2M2QtN2RlMi00MzllLWEzMTktZDY4NDBiMjhjY2Y4IiwicHJvZmlsZUltYWdlVXJsIjoiaHR0cHM6Ly9jZG4ucGl4YWJheS5jb20vcGhvdG8vMjAyMy8wOS8yMS8xOC8xNy9hdXRvbW9iaWxlLTgyNjczNjlfMTI4MC5qcGciLCJlbWFpbCI6IjI3IiwiZXhwIjoxNjk5NDMzMzE2fQ.Z_HZa5MiBx8AkG16AgqH42Q9nE1LKVQMDYEy6wkWqZA
+POST http://localhost:8100/api/v1/story
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuyCrOyekCIsImlkIjoiNDgxNTBmMjEtNmZlMy00YTJmLWE2NWUtNWE1NDc1ZWM3MTM1IiwicHJvZmlsZUltYWdlVXJsIjoiaHR0cHM6Ly9jZG4ucGl4YWJheS5jb20vcGhvdG8vMjAyMy8wOS8yMS8xOC8xNy9hdXRvbW9iaWxlLTgyNjczNjlfMTI4MC5qcGciLCJlbWFpbCI6IjM1IiwiZXhwIjoxNzAwODE5NTgxfQ.ZzNQvmplP8TG2Jwqky-RgZ6kSfF4DEW2xFcuUBjTvo4
+Content-Type: application/json
+
+{
+  "article":{
+    "title":"개발자가 되고싶어요4",
+    "content":"개발자가 되려면 어떻게 해야하죠?4"},
+  "category":"HEALTH",
+  "tasks":[
+    {"content":"코드 많이치기4",
+      "period":"ALWAYS"},
+    {"content":"코드 공부하기4",
+      "period":"ALWAYS"}
+  ]
+}
+
+
+
+
+### insertArticle(질문 작성)
+POST http://localhost:8080/api/v1/question/article
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuyCrOyekCIsImlkIjoiNTUyMjdjZmMtNmJmNi00ZTdlLTljM2QtYWViMjg3NGE0NTQ2IiwicHJvZmlsZUltYWdlVXJsIjoiaHR0cHM6Ly9jZG4ucGl4YWJheS5jb20vcGhvdG8vMjAyMy8wOS8yMS8xOC8xNy9hdXRvbW9iaWxlLTgyNjczNjlfMTI4MC5qcGciLCJlbWFpbCI6IjMyIiwiZXhwIjoxNjk5NTgzNDA5fQ.jd6OcfMAESHH2im2Bsc24T_9jlwz3O_ljvWWImtAIUo
 Content-Type: application/json
 
 {
   "category": "STRESS",
   "difficulty": "어려움",
-  "title" : "새로운글",
-  "content": "새로운글"
+  "title" : "가장 최근글",
+  "content": "가장 최근글"
 
 }
 
 ### deleteArticle(질문 삭제)
-DELETE http://localhost:8082/api/v1/question/article/26
+DELETE http://localhost:8080/api/v1/question/article/26
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuyCrOyekCIsImlkIjoiMWJlYTJhMzYtN2U4Yi00ZDM1LThjMzQtMGQwNGNkODUwZTExIiwicHJvZmlsZUltYWdlVXJsIjoiaHR0cHM6Ly9jZG4ucGl4YWJheS5jb20vcGhvdG8vMjAyMy8wOS8yMS8xOC8xNy9hdXRvbW9iaWxlLTgyNjczNjlfMTI4MC5qcGciLCJlbWFpbCI6IjI1IiwiZXhwIjoxNjk5NDMwNTM5fQ.avaT-kFDV97a-6thaSC31YBHDiuZGRYRpKhlZ_tXXd8
 
 ### findArticleById(질문 상세조회)
-GET http://localhost:8082/api/v1/question/article/27
+GET http://localhost:8080/api/v1/question/article/27
 Accept: application/json
 
 ### updateArticle(질문 업데이트)
-PUT http://localhost:8082/api/v1/question/article/4
+PUT http://localhost:8080/api/v1/question/article/4
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuuwlOq_iCIsImlkIjoiYjJmYTBkZmItZDE5My00YjAyLTk0MDYtMzYzMDYwOWNkM2U4IiwicHJvZmlsZUltYWdlVXJsIjoi67CU6r-IIiwiZW1haWwiOiIyMSIsImV4cCI6MTY5OTI2MzMyOX0.br3fzParrtZXh669Ct4dMjZhs2tdnuwPHdskaNH4VMM
 Content-Type: application/json
 
@@ -38,15 +63,15 @@ Content-Type: application/json
 }
 
 ### insertComment(댓글 등록)
-POST http://localhost:8082/api/v1/question/comment/26
+POST http://localhost:8080/api/v1/question/comment/28
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuyCrOyekCIsImlkIjoiMWJlYTJhMzYtN2U4Yi00ZDM1LThjMzQtMGQwNGNkODUwZTExIiwicHJvZmlsZUltYWdlVXJsIjoiaHR0cHM6Ly9jZG4ucGl4YWJheS5jb20vcGhvdG8vMjAyMy8wOS8yMS8xOC8xNy9hdXRvbW9iaWxlLTgyNjczNjlfMTI4MC5qcGciLCJlbWFpbCI6IjI1IiwiZXhwIjoxNjk5NDMwNTM5fQ.avaT-kFDV97a-6thaSC31YBHDiuZGRYRpKhlZ_tXXd8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuyCrOyekCIsImlkIjoiOWU4MjlhZmEtZjgzMC00NDRlLWEzOGYtMDBlNTI4MTkxYjNiIiwicHJvZmlsZUltYWdlVXJsIjoiaHR0cHM6Ly9jZG4ucGl4YWJheS5jb20vcGhvdG8vMjAyMy8wOS8yMS8xOC8xNy9hdXRvbW9iaWxlLTgyNjczNjlfMTI4MC5qcGciLCJlbWFpbCI6IjI4IiwiZXhwIjoxNjk5NDUzMzUwfQ.pdoWc1gM1703Z_e9zkwjOOY90Btd4wLO190m7LTL0P0
 
 
 {
-  "content" : "수정입니다."
+  "content" : "괜찮아요 잘 하다보면 되겠죠 마음 잃지 마세요"
 }
 
 ### deleteComment(댓글 삭제)
-DELETE http://localhost:8082/api/v1/question/comment/8
+DELETE http://localhost:8080/api/v1/question/comment/8
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJuaWNrbmFtZSI6IuuwlOq_iCIsImlkIjoiYjJmYTBkZmItZDE5My00YjAyLTk0MDYtMzYzMDYwOWNkM2U4IiwicHJvZmlsZUltYWdlVXJsIjoi67CU6r-IIiwiZW1haWwiOiIyMSIsImV4cCI6MTY5OTI3Mjc3Nn0.pDfVzmvWhsIucUj3xFQyc5fmWcwhNuclvmMmU5cBEC4
