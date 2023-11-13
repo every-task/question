@@ -80,6 +80,7 @@ public class ArticleService {
             articleById.setContent(article.getContent());
             articleById.setTitle(article.getTitle());
             articleById.setCategory(article.getCategory());
+            questionProducer.send(ArticleKafka.of(articleById));
             return new ArticleResponse(articleById);
         }
         else {
