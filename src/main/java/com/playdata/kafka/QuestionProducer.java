@@ -19,7 +19,9 @@ public class QuestionProducer {
     public void send(ArticleKafka articleKafka) {
         CompletableFuture<SendResult<String, ArticleKafka>> resultCompletableFuture =
                 kafkaTemplate.send(TopicConfig.QUESTION, articleKafka);
-        resultCompletableFuture
+                if(resultCompletableFuture.isCompletedExceptionally()){
+                throw new RuntimeException("send failure");}
+                resultCompletableFuture
                 .thenAccept(result ->
                         System.out.println("send After "
                                 + articleKafka + " "
