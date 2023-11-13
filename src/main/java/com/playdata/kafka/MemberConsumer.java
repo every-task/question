@@ -25,4 +25,8 @@ public class MemberConsumer {
             member1.setProfileImageUrl(data.profileImageUrl());
         }
     }
+    @KafkaListener(topics = TopicConfig.memberDLT)
+    public void dltListen(byte[] dlt){
+        System.out.println("dltLinsten : " + new String(dlt));
+    }
 }
