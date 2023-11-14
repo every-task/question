@@ -31,7 +31,7 @@ jobs:
       run: docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}
 
     - name: SSH Remote Commands
-      uses: appleboy/ssh-action@v1.0.0
+      uses: appleboy/ssh-action@v0.1.4
       with:
         host: ${{secrets.HOST_IP}}
         username: ${{secrets.HOST_USERNAME}}
