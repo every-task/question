@@ -22,6 +22,6 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
 config:
   client:
-    origin: ${DOMAIN_IP}:80
+    origin: ${DOMAIN_IP}
   jwt:
     secret: ${JWT_SECRET}

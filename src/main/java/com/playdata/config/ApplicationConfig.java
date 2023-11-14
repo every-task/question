@@ -13,21 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
     private final JwtService jwtService;
-
-    @Value("${config.password.strength}")
-    private int STRENGTH;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(STRENGTH);
-    }
-
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider
                 = new DaoAuthenticationProvider();
-
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService(jwtService::parseToken);
 
         return authenticationProvider;
