@@ -18,7 +18,6 @@ public class ApplicationConfig {
         DaoAuthenticationProvider authenticationProvider
                 = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(jwtService::parseToken);
-
         return authenticationProvider;
     }
 }
