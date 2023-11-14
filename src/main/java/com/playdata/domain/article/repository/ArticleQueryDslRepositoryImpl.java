@@ -38,7 +38,7 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
     public Page<ArticleResponse> getArticles(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
         JPAQuery<Article> query =jpaQueryFactory.select(article)
                 .from(article)
-                .leftJoin(article.member)
+                .join(article.member)
                 .fetchJoin()
                 .where((findExistCategory(articleCategoryRequest.getCategory()))
                 ,article.isDeleted.eq(false)
