@@ -29,3 +29,15 @@ jobs:
       
     - name: Docker push
       run: docker push ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}
+
+    - name: SSH Remote Commands
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{secrets.HOST_IP}}
+        username: ${{secrets.HOST_USERNANE}}
+        key: ${{secrets.HOST_KEY}}
+        script: |
+          # sudo docker pull ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}
+          # sudo docker stop ${{secrets.DOCKER_REPOSITORY}}
+          # sudo docker rm ${{secrets.DOCKER_REPOSITORY}}
+          # sudo docker run --name ${{secrets.DOCKER_REPOSITORY}} -d -p 8080:8080 ${{secrets.DOCKER_USERNAME}}/${{secrets.DOCKER_REPOSITORY}}   
