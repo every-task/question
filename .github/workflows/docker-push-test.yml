@@ -36,6 +36,6 @@ jobs:
         host: ${{secrets.HOST_IP}}
         username: ${{secrets.HOST_USERNANE}}
         key: ${{secrets.HOST_KEY}}
-        script: 
+        script: |
           sudo su
           kubectl rollout restart deploy question -n myapp
