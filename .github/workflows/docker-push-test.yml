@@ -34,7 +34,7 @@ jobs:
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{secrets.HOST_IP}}
-        username: ${{secrets.HOST_USERNANE}}
+        username: ${{secrets.HOST_USERNAME}}
         key: ${{secrets.HOST_KEY}}
         script: |
           sudo su
