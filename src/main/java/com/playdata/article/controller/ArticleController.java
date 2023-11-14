@@ -30,7 +30,8 @@ public class ArticleController {
     //질문 등록
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void insert(@AuthenticationPrincipal TokenInfo tokenInfo, @RequestBody ArticleRequest articleRequest)
+    public void insert(@AuthenticationPrincipal TokenInfo tokenInfo,
+                       @RequestBody ArticleRequest articleRequest)
     {
         articleService.insert(articleRequest, tokenInfo.getId());
     }
@@ -45,18 +46,20 @@ public class ArticleController {
                                         @RequestParam(value = "orderBy", required = false, defaultValue = "latest")String orderBy)
     {
         if(category==null) {
-            List<String> category2 = new ArrayList<>();
-            ArticleCategoryRequest articleCategoryRequest =
-                    new ArticleCategoryRequest
-                            (category2.stream().map(Category::valueOf)
-                            .toList(),keyword,orderBy);
+            List<String> emptyArrayList = new ArrayList<>();
+            ArticleCategoryRequest articleCategoryRequest = getArticleCategoryRequest(keyword, orderBy, emptyArrayList);
             return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
         }
+        ArticleCategoryRequest articleCategoryRequest = getArticleCategoryRequest(keyword,orderBy,category);
+        return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
+    }
+
+    public ArticleCategoryRequest getArticleCategoryRequest(String keyword, String orderBy, List<String> emptyArrayList) {
         ArticleCategoryRequest articleCategoryRequest =
                 new ArticleCategoryRequest
-                        (category.stream().map(Category::valueOf)
-                                .toList(),keyword,orderBy);
-        return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
+                        (emptyArrayList.stream().map(Category::valueOf)
+                        .toList(), keyword, orderBy);
+        return articleCategoryRequest;
     }
 
     //질문 삭제

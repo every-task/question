@@ -13,4 +13,5 @@ public interface ArticleRepository extends JpaRepository<Article,Long>,ArticleQu
 //    Optional<Article> findArticleById(Long id);
     Optional<Article> findByIdAndAndDeletedAtIsNull(Long id);
 
+
 }

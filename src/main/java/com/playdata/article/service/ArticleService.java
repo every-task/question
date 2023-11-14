@@ -33,7 +33,6 @@ public class ArticleService {
     public void insert(ArticleRequest articleRequest, UUID memberId)
     {
         Article save = articleRepository.save(articleRequest.toEntity(memberId));
-        //send 실패
         questionProducer.send(ArticleKafka.of(save));
     }
 
@@ -48,7 +47,8 @@ public class ArticleService {
     public Article findById(Long id)
     {
         Optional<Article>  findAriticleById = articleRepository.findByIdAndAndDeletedAtIsNull(id);
-        Article article = findAriticleById.orElseThrow(()-> new NoArticleByIdException("No Article"));
+        Article article = findAriticleById.orElseThrow(()->
+                new NoArticleByIdException("No Article . id = {%s}".formatted(String.valueOf(id))));
         return article;
     }
 //    상세 article
@@ -62,31 +62,29 @@ public class ArticleService {
     public void deleteById(TokenInfo tokenInfo, Long id) throws NotCorrectTokenIdException
     {
         Article article = findById(id);
-        if(tokenInfo.getId().equals(article.getMember().getId()))
-        {
+        if(checkTokenAvailabiltiy(tokenInfo, article))
             article.delete();
-        }
-        else {
-            throw new NotCorrectTokenIdException("Not Correct Token");
-        }
     }
+
+    public boolean checkTokenAvailabiltiy(TokenInfo tokenInfo, Article article)
+            throws NotCorrectTokenIdException {
+        if(!tokenInfo.getId().equals(article.getMember().getId()))
+            throw new NotCorrectTokenIdException("Not Correct Token . token id = {%s}"
+                    .formatted(String.valueOf(tokenInfo.getId())));
+        return true;
+    }
+
     //update
     @Transactional
-    public ArticleResponse updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article) throws NotCorrectTokenIdException
+    public ArticleResponse updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article)
+            throws NotCorrectTokenIdException
     {
         Article articleById = findById(id);
-        if(tokenInfo.getId().equals(articleById.getMember().getId()))
-        {
+        if(checkTokenAvailabiltiy(tokenInfo,articleById))
             articleById.setContent(article.getContent());
             articleById.setTitle(article.getTitle());
             articleById.setCategory(article.getCategory());
             questionProducer.send(ArticleKafka.of(articleById));
             return new ArticleResponse(articleById);
-        }
-        else {
-            throw new NotCorrectTokenIdException("Not Correct Token");
-        }
     }
-
-
 }

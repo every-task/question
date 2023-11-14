@@ -16,18 +16,15 @@ public class CustomExceptionAdvice {
 
     @ExceptionHandler(NoArticleByIdException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String resourceNotFoundExceptionHandler(NoArticleByIdException e) {
-        log.error("No Ariticle Exception",e);
-        return e.getMessage();
+    public ExceptionResponse resourceNotFoundExceptionHandler(NoArticleByIdException e) {
+        log.error(e.getMessage(),e);
+        return ExceptionResponse.responseBuilder("500",e.getMessage());
     }
     @ExceptionHandler(ExpiredJwtException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String weakKeyExceptionHandler(ExpiredJwtException e){
-        log.error("Weakey Exception", e);
-        return e.getMessage();
+    public ExceptionResponse weakKeyExceptionHandler(ExpiredJwtException e){
+        log.error(e.getMessage(), e);
+        return ExceptionResponse.responseBuilder("401",e.getMessage());
     }
-
-
-
 
 }

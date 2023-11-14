@@ -4,6 +4,8 @@ import com.playdata.config.TokenInfo;
 import com.playdata.domain.comment.entity.Comment;
 import com.playdata.domain.comment.request.CommentRequest;
 import com.playdata.comment.service.CommentService;
+import com.playdata.domain.comment.response.CommentResponse;
+import com.playdata.exception.NotCorrectTokenIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -26,15 +28,13 @@ public class CommentController {
     }
     @DeleteMapping("/{id}")
     public void deleteComment(@AuthenticationPrincipal TokenInfo tokenInfo,
-                              @PathVariable(value="id") Long id)
-    {
+                              @PathVariable(value="id") Long id) throws NotCorrectTokenIdException {
         commentService.deleteComment(tokenInfo,id);
     }
     @PutMapping("/{id}")
-    public Comment updateComment(@AuthenticationPrincipal TokenInfo tokenInfo,
-                                 @PathVariable(value = "id") Long id,
-                                 CommentRequest commentRequest)
-    {
+    public CommentResponse updateComment(@AuthenticationPrincipal TokenInfo tokenInfo,
+                                         @PathVariable(value = "id") Long id,
+                                         CommentRequest commentRequest) throws NotCorrectTokenIdException {
         return commentService.updateComment(tokenInfo,id,commentRequest);
     }
 

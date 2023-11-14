@@ -15,10 +15,8 @@ import java.util.UUID;
 public class Member {
     @Id
     private UUID id;
-
     private String nickname;
     private String profileImageUrl;
-
     @OneToMany(mappedBy = "member")
     private List<Article> articles;
 
