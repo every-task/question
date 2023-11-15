@@ -18,13 +18,13 @@ public class CustomExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ExceptionResponse resourceNotFoundExceptionHandler(NoArticleByIdException e) {
         log.error(e.getMessage(),e);
-        return ExceptionResponse.responseBuilder("500",e.getMessage());
+        return ExceptionResponse.responseBuilder(e.getMessage());
     }
     @ExceptionHandler(ExpiredJwtException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ExceptionResponse weakKeyExceptionHandler(ExpiredJwtException e){
         log.error(e.getMessage(), e);
-        return ExceptionResponse.responseBuilder("401",e.getMessage());
+        return ExceptionResponse.responseBuilder(e.getMessage());
     }
 
 }

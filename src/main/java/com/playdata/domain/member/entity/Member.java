@@ -1,5 +1,6 @@
 package com.playdata.domain.member.entity;
 
+import com.playdata.config.BaseEntity;
 import com.playdata.domain.article.entity.Article;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
     @Id
     private UUID id;
     private String nickname;
