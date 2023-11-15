@@ -3,6 +3,7 @@ package com.playdata.article.service;
 import com.playdata.config.TokenInfo;
 import com.playdata.domain.comment.entity.Comment;
 import com.playdata.domain.comment.repository.CommentRepository;
+import com.playdata.domain.member.kafka.Action;
 import com.playdata.exception.NoArticleByIdException;
 import com.playdata.exception.NotCorrectTokenIdException;
 import com.playdata.domain.article.entity.Article;
@@ -34,7 +35,7 @@ public class ArticleService {
     public void insert(ArticleRequest articleRequest, UUID memberId)
     {
         Article save = articleRepository.save(articleRequest.toEntity(memberId));
-        questionProducer.send(ArticleKafka.of(save));
+        questionProducer.send(ArticleKafka.ArticleBuilder(save, Action.valueOf("INSERT")));
     }
 
     public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest)
@@ -67,6 +68,7 @@ public class ArticleService {
         Article article = findById(id);
         if(checkTokenAvailabiltiy(tokenInfo, article))
             article.delete();
+        questionProducer.send(ArticleKafka.ArticleBuilder(article, Action.valueOf("DELETE")));
     }
 
     public boolean checkTokenAvailabiltiy(TokenInfo tokenInfo, Article article)
@@ -87,7 +89,7 @@ public class ArticleService {
             articleById.setContent(article.getContent());
             articleById.setTitle(article.getTitle());
             articleById.setCategory(article.getCategory());
-            questionProducer.send(ArticleKafka.of(articleById));
+            questionProducer.send(ArticleKafka.ArticleBuilder(articleById, Action.valueOf("EDIT")));
             return new ArticleResponse(articleById);
     }
 }
