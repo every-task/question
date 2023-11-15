@@ -15,7 +15,6 @@ import org.springframework.util.backoff.FixedBackOff;
 @Configuration
 @RequiredArgsConstructor
 public class ConsumerConfig {
-    private final KafkaProperties kafkaProperties;
 
     @Bean
     public RecordMessageConverter converter() {
