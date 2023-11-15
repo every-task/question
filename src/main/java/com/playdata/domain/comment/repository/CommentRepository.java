@@ -12,6 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+    @Query("select c from Comment as c " +
+            "join fetch c.member where c.article.id=:id and c.deletedAt is null")
+    List<Comment> findCommentsByArticleId(Long id);
 
 
 
