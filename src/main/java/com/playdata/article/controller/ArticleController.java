@@ -40,14 +40,15 @@ public class ArticleController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")int page,
-                                        @RequestParam(value="size", required = false, defaultValue = "10")int size,
+                                        @RequestParam(value="size", required = false, defaultValue = "6")int size,
                                         @RequestParam(value="category", required = false)  List<String> category,
                                         @RequestParam(value="keyword", required = false, defaultValue = "")String keyword,
                                         @RequestParam(value = "orderBy", required = false, defaultValue = "latest")String orderBy)
     {
         if(category==null) {
             List<String> emptyArrayList = new ArrayList<>();
-            ArticleCategoryRequest articleCategoryRequest = getArticleCategoryRequest(keyword, orderBy, emptyArrayList);
+            ArticleCategoryRequest articleCategoryRequest =
+                    getArticleCategoryRequest(keyword, orderBy, emptyArrayList);
             return articleService.getAll(PageRequest.of(page,size),articleCategoryRequest);
         }
         ArticleCategoryRequest articleCategoryRequest = getArticleCategoryRequest(keyword,orderBy,category);

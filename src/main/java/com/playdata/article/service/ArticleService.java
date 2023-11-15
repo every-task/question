@@ -28,6 +28,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final CommentRepository commentRepository;
     private final QuestionProducer questionProducer;
 
     public void insert(ArticleRequest articleRequest, UUID memberId)
@@ -46,7 +47,7 @@ public class ArticleService {
     // id로 article 찾아옴
     public Article findById(Long id)
     {
-        Optional<Article>  findAriticleById = articleRepository.findByIdAndAndDeletedAtIsNull(id);
+        Optional<Article>  findAriticleById = articleRepository.findArticleById(id);
         Article article = findAriticleById.orElseThrow(()->
                 new NoArticleByIdException("No Article . id = {%s}".formatted(String.valueOf(id))));
         return article;
@@ -55,6 +56,8 @@ public class ArticleService {
     public ArticleDetailResponse getById(Long id)
     {
         Article article =findById(id);
+        List<Comment> commentList = commentRepository.findCommentsByArticleId(id);
+        article.setComments(commentList);
         return new ArticleDetailResponse(article);
     }
 

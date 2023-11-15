@@ -30,7 +30,7 @@ public class CommentService {
     private final ArticleRepository articleRepository;
     public void insertComment(CommentRequest commentRequest, Long articleId, UUID memberId)
     {
-        Optional<Article> getArticleById = articleRepository.findByIdAndAndDeletedAtIsNull(articleId);
+        Optional<Article> getArticleById = articleRepository.findArticleById(articleId);
         getArticleById.orElseThrow(()->
                 new NoArticleByIdException("No Article . id = {%s}".formatted(String.valueOf(articleId))));
         commentRepository.save(commentRequest.toEntity(memberId, articleId));
