@@ -4,9 +4,10 @@ import com.playdata.domain.member.entity.Member;
 
 import java.util.UUID;
 
-public record MemberKafkaData(String id,
+public record MemberKafka(String id,
                               String nickname,
-                              String profileImageUrl) {
+                              String profileImageUrl,
+                          Action action) {
 
     public Member ToEntity() {
         return Member.builder()
