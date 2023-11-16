@@ -7,7 +7,7 @@ spring:
     password: ${DATABASE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
   kafka:
     bootstrap-servers: ${KAFKA_URL}:${KAFKA_PORT}
     consumer:
