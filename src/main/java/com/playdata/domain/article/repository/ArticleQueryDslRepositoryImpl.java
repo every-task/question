@@ -8,9 +8,11 @@ import com.playdata.domain.article.response.ArticleResponse;
 
 import com.playdata.domain.article.response.QArticleResponse;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -36,7 +38,14 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
 
     @Override
     public Page<ArticleResponse> getArticles(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
+        LocalDateTime nowDateTime = LocalDateTime.now();
         JPAQuery<Article> query =jpaQueryFactory.select(article)
+//                        ,new CaseBuilder()
+//                        .when(article.createdAt.year().lt(nowDateTime.getYear())).then(article.createdAt.year())
+//                        .when((article.createdAt.month().subtract(article.createdAt.month()))<10).then(article.createdAt.year())
+//                        .when(article.createdAt.year().lt(nowDateTime.getDayOfYear())).then(article.createdAt.year())
+//                        .when(article.createdAt.year().lt(nowDateTime.getDayOfYear())).then(article.createdAt.year())
+//                        .otherwise("기타"))
                 .from(article)
                 .join(article.member)
                 .fetchJoin()
@@ -46,7 +55,7 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
                                 .or(findExistKeyWordInContent(articleCategoryRequest.getKeyword()))
                                 .or(findExistKeyWordInNickName(articleCategoryRequest.getKeyword()))))
                 .orderBy(createOrderSpecifier(articleCategoryRequest.getOrderBy()))
-                .offset(pageRequest.getPageNumber()* pageRequest.getPageSize())
+                .offset(pageRequest.getOffset())
                 .limit(pageRequest.getPageSize());
                 List<Article> content = query.fetch();
                 Long totalSize =jpaQueryFactory.select(article.count())
@@ -86,11 +95,11 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
         if(orderBy.equals("latest")) {
             orderSpecifiers.add(new OrderSpecifier(Order.DESC,article.createdAt));
         }
-        else if(orderBy.equals("manyComment")) {
+        else if(orderBy.equals("manyComments")) {
             orderSpecifiers.add(new OrderSpecifier(Order.DESC,article.comments));
         }
         else {
-
+            //TODO 조회수 순으로 정렬
         }
         return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
     }

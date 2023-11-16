@@ -13,18 +13,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseEntity {
+@Builder
+@AllArgsConstructor
+public class Member extends BaseEntity{
     @Id
     private UUID id;
     private String nickname;
     private String profileImageUrl;
     @OneToMany(mappedBy = "member")
     private List<Article> articles;
-
-    @Builder
-    public Member(UUID id, String nickname, String profileImageUrl) {
-        this.id = id;
-        this.nickname = nickname;
-        this.profileImageUrl = profileImageUrl;
-    }
 }

@@ -40,7 +40,7 @@ public class ArticleController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<ArticleResponse> getAll(@RequestParam(value ="page",required = false,defaultValue = "0")int page,
-                                        @RequestParam(value="size", required = false, defaultValue = "6")int size,
+                                        @RequestParam(value="size", required = false, defaultValue = "9")int size,
                                         @RequestParam(value="category", required = false)  List<String> category,
                                         @RequestParam(value="keyword", required = false, defaultValue = "")String keyword,
                                         @RequestParam(value = "orderBy", required = false, defaultValue = "latest")String orderBy)
