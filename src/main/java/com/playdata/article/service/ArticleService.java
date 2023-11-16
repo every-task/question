@@ -35,7 +35,7 @@ public class ArticleService {
     public void insert(ArticleRequest articleRequest, UUID memberId)
     {
         Article save = articleRepository.save(articleRequest.toEntity(memberId));
-        questionProducer.send(ArticleKafka.ArticleBuilder(save, Action.valueOf("INSERT")));
+        questionProducer.send(ArticleKafka.ArticleBuilder(save, Action.valueOf("CREATE")));
     }
 
     public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest)
