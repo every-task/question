@@ -14,11 +14,11 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 @Slf4j
 public class QuestionProducer {
-    private final KafkaTemplate<String, ArticleKafka> kafkaTemplate;
+    private final KafkaTemplate<String, KafkaData<ArticleKafka>> kafkaTemplate;
     @Async
     public void send(ArticleKafka articleKafka) {
-        CompletableFuture<SendResult<String, ArticleKafka>> resultCompletableFuture =
-                kafkaTemplate.send(TopicConfig.QUESTION, articleKafka);
+        CompletableFuture<SendResult<String, KafkaData<ArticleKafka>>> resultCompletableFuture =
+                kafkaTemplate.send(TopicConfig.QUESTION, KafkaData.create(articleKafka));
                 if(resultCompletableFuture.isCompletedExceptionally()){
                 throw new RuntimeException("send failure");}
                 resultCompletableFuture
