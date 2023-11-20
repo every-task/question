@@ -1,9 +1,9 @@
 package com.playdata.kafka;
 
 import com.playdata.domain.member.entity.Member;
+import com.playdata.domain.member.kafka.Action;
 import com.playdata.domain.member.kafka.MemberKafka;
 import com.playdata.domain.member.repository.MemberRepository;
-import com.playdata.exception.NoArticleByIdException;
 import com.playdata.exception.NoMemberByIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,10 +21,10 @@ public class MemberConsumer {
     // TODO 현재는 받아서 로직으로 구현 insert, update, delete를 action에서 확인해서 처리
     @KafkaListener(topics = TopicConfig.MEMBER)
     public void listen(MemberKafka data) {
-        if(data.action().toString().equals("CREATE")) {
+        if(data.action()==Action.CREATE) {
             memberRepository.save(data.ToEntity());
         }
-        else if(data.action().toString().equals("UPDATE")) {
+        else if(data.action()==Action.UPDATE) {
             memberRepository.save(data.ToEntity());
         }
         else {
