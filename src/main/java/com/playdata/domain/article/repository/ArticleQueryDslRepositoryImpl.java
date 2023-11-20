@@ -1,29 +1,21 @@
 package com.playdata.domain.article.repository;
-
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.entity.Category;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.response.ArticleResponse;
-
-
-import com.playdata.domain.article.response.QArticleResponse;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.playdata.domain.article.entity.QArticle.article;
 
 
@@ -33,19 +25,9 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
     {
         this.jpaQueryFactory=new JPAQueryFactory(entityManager);
     }
-
-
-
     @Override
     public Page<ArticleResponse> getArticles(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
-        LocalDateTime nowDateTime = LocalDateTime.now();
         JPAQuery<Article> query =jpaQueryFactory.select(article)
-//                        ,new CaseBuilder()
-//                        .when(article.createdAt.year().lt(nowDateTime.getYear())).then(article.createdAt.year())
-//                        .when((article.createdAt.month().subtract(article.createdAt.month()))<10).then(article.createdAt.year())
-//                        .when(article.createdAt.year().lt(nowDateTime.getDayOfYear())).then(article.createdAt.year())
-//                        .when(article.createdAt.year().lt(nowDateTime.getDayOfYear())).then(article.createdAt.year())
-//                        .otherwise("기타"))
                 .from(article)
                 .join(article.member)
                 .fetchJoin()
@@ -70,9 +52,6 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
         Page<ArticleResponse> map = articlesList.map(ArticleResponse::new);
         return map;
     }
-
-
-
     private BooleanBuilder findExistCategory(List<Category> category){
         return category==null ? null : categoryOrCondition(category);
     }

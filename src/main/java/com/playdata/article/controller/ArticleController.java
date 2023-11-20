@@ -3,6 +3,7 @@ package com.playdata.article.controller;
 import com.playdata.article.service.ArticleService;
 import com.playdata.config.TokenInfo;
 import com.playdata.domain.article.entity.Category;
+import com.playdata.exception.NoTokenException;
 import com.playdata.exception.NotCorrectTokenIdException;
 import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
@@ -31,8 +32,10 @@ public class ArticleController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void insert(@AuthenticationPrincipal TokenInfo tokenInfo,
-                       @RequestBody ArticleRequest articleRequest)
-    {
+                       @RequestBody ArticleRequest articleRequest) throws NoTokenException {
+        if(tokenInfo==null) {
+            throw new NoTokenException("Token is Null");
+        }
         articleService.insert(articleRequest, tokenInfo.getId());
     }
 
@@ -43,8 +46,7 @@ public class ArticleController {
                                         @RequestParam(value="size", required = false, defaultValue = "9")int size,
                                         @RequestParam(value="category", required = false)  List<String> category,
                                         @RequestParam(value="keyword", required = false, defaultValue = "")String keyword,
-                                        @RequestParam(value = "orderBy", required = false, defaultValue = "latest")String orderBy)
-    {
+                                        @RequestParam(value = "orderBy", required = false, defaultValue = "latest")String orderBy) {
         if(category==null) {
             List<String> emptyArrayList = new ArrayList<>();
             ArticleCategoryRequest articleCategoryRequest =
@@ -67,8 +69,7 @@ public class ArticleController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteArticle(@AuthenticationPrincipal TokenInfo tokenInfo,
-                              @PathVariable Long id) throws NotCorrectTokenIdException
-    {
+                              @PathVariable Long id) throws NotCorrectTokenIdException {
         articleService.deleteById(tokenInfo,id);
     }
     //질문 수정
