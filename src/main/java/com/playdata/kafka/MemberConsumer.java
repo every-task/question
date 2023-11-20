@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.ToDoubleBiFunction;
 
 @Component
 @RequiredArgsConstructor
@@ -22,12 +21,10 @@ public class MemberConsumer {
     // TODO 현재는 받아서 로직으로 구현 insert, update, delete를 action에서 확인해서 처리
     @KafkaListener(topics = TopicConfig.MEMBER)
     public void listen(MemberKafka data) {
-        if(data.action().toString().equals("CREATE"))
-        {
+        if(data.action().toString().equals("CREATE")) {
             memberRepository.save(data.ToEntity());
         }
-        else if(data.action().toString().equals("UPDATE"))
-        {
+        else if(data.action().toString().equals("UPDATE")) {
             memberRepository.save(data.ToEntity());
         }
         else {
