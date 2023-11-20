@@ -50,7 +50,7 @@ public class QuestionProducer {
     public void sendArticleUpdate(ArticleKafka articleKafka) {
         CompletableFuture<SendResult<String, KafkaData<ArticleKafka>>> resultCompletableFuture =
                 kafkaTemplate.send(TopicConfig.QUESTION,
-                        KafkaData.create(articleKafka, Action.valueOf("EDIT")));
+                        KafkaData.create(articleKafka, Action.valueOf("UPDATE")));
         if(resultCompletableFuture.isCompletedExceptionally()){
             throw new RuntimeException("send failure");
         }
