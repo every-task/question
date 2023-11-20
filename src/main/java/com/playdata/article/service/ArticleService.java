@@ -32,30 +32,22 @@ public class ArticleService {
     private final CommentRepository commentRepository;
     private final QuestionProducer questionProducer;
 
-    public void insert(ArticleRequest articleRequest, UUID memberId)
-    {
+    public void insert(ArticleRequest articleRequest, UUID memberId) {
         Article save = articleRepository.save(articleRequest.toEntity(memberId));
-        questionProducer.send(ArticleKafka.ArticleBuilder(save, Action.valueOf("CREATE")));
+        questionProducer.sendArticleCreate(ArticleKafka.ArticleBuilder(save));
     }
 
-    public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest)
-    {
+    public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
         return articleRepository.getArticles(pageRequest,articleCategoryRequest);
     }
 
-
-
-    // id로 article 찾아옴
-    public Article findById(Long id)
-    {
+    public Article findById(Long id) {
         Optional<Article>  findAriticleById = articleRepository.findArticleById(id);
         Article article = findAriticleById.orElseThrow(()->
                 new NoArticleByIdException("No Article . id = {%s}".formatted(String.valueOf(id))));
         return article;
     }
-//    상세 article
-    public ArticleDetailResponse getById(Long id)
-    {
+    public ArticleDetailResponse getById(Long id) {
         Article article =findById(id);
         List<Comment> commentList = commentRepository.findCommentsByArticleId(id);
         article.setComments(commentList);
@@ -63,12 +55,11 @@ public class ArticleService {
     }
 
     @Transactional
-    public void deleteById(TokenInfo tokenInfo, Long id) throws NotCorrectTokenIdException
-    {
+    public void deleteById(TokenInfo tokenInfo, Long id) throws NotCorrectTokenIdException {
         Article article = findById(id);
         if(checkTokenAvailabiltiy(tokenInfo, article))
             article.delete();
-        questionProducer.send(ArticleKafka.ArticleBuilder(article, Action.valueOf("DELETE")));
+        questionProducer.sendArticleDelete(ArticleKafka.ArticleBuilder(article));
     }
 
     public boolean checkTokenAvailabiltiy(TokenInfo tokenInfo, Article article)
@@ -79,17 +70,15 @@ public class ArticleService {
         return true;
     }
 
-    //update
     @Transactional
     public ArticleResponse updateArticle(TokenInfo tokenInfo,Long id,ArticleRequest article)
-            throws NotCorrectTokenIdException
-    {
+            throws NotCorrectTokenIdException {
         Article articleById = findById(id);
         if(checkTokenAvailabiltiy(tokenInfo,articleById))
             articleById.setContent(article.getContent());
             articleById.setTitle(article.getTitle());
             articleById.setCategory(article.getCategory());
-            questionProducer.send(ArticleKafka.ArticleBuilder(articleById, Action.valueOf("EDIT")));
+            questionProducer.sendArticleUpdate(ArticleKafka.ArticleBuilder(articleById));
             return new ArticleResponse(articleById);
     }
 }
