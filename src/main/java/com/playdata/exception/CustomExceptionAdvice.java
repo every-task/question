@@ -26,5 +26,17 @@ public class CustomExceptionAdvice {
         log.error(e.getMessage(), e);
         return ExceptionResponse.responseBuilder(e.getMessage());
     }
+    @ExceptionHandler(NoTokenException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ExceptionResponse noTokenExceptionHandler(NoTokenException e) {
+        log.error(e.getMessage(),e);
+        return ExceptionResponse.responseBuilder(e.getMessage());
+    }
+    @ExceptionHandler(TokenTimeOutException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ExceptionResponse tokenTimeOutExceptionHandler(TokenTimeOutException e) {
+        log.error(e.getMessage(),e);
+        return ExceptionResponse.responseBuilder(e.getMessage());
+    }
 
 }
