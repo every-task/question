@@ -1,7 +1,7 @@
 package com.playdata.domain.article.kafka;
 
 import com.playdata.domain.article.entity.Article;
-import com.playdata.domain.member.kafka.Action;
+import com.playdata.domain.article.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,15 +15,15 @@ public class ArticleKafka {
     private Long id;
     private String title;
     private String content;
-    private Action action;
-    public static ArticleKafka ArticleBuilder(Article article, Action action)
+    private Category category;
+    public static ArticleKafka ArticleBuilder(Article article)
     {
         return ArticleKafka
                 .builder()
                 .id(article.getId())
                 .title(article.getTitle())
                 .content(article.getContent())
-                .action(action)
+                .category(article.getCategory())
                 .build();
     }
 }
