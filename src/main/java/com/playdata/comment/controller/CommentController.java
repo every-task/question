@@ -1,7 +1,6 @@
 package com.playdata.comment.controller;
 
 import com.playdata.config.TokenInfo;
-import com.playdata.domain.comment.entity.Comment;
 import com.playdata.domain.comment.request.CommentRequest;
 import com.playdata.comment.service.CommentService;
 import com.playdata.domain.comment.response.CommentResponse;
@@ -37,6 +36,4 @@ public class CommentController {
                                          CommentRequest commentRequest) throws NotCorrectTokenIdException {
         return commentService.updateComment(tokenInfo,id,commentRequest);
     }
-
-
 }
