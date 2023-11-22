@@ -40,6 +40,9 @@ public class ArticleService {
     public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
         return articleRepository.getArticles(pageRequest,articleCategoryRequest);
     }
+    public Page<ArticleResponse> getArticleOrderByPoupluar(PageRequest pageRequest) {
+        return articleRepository.getArticleByOrderByPoupular(pageRequest);
+    }
 
     public Article findById(Long id) {
         Optional<Article>  findAriticleById = articleRepository.findArticleById(id);
@@ -49,9 +52,9 @@ public class ArticleService {
     }
     public ArticleDetailResponse getById(Long id) {
         Article article =findById(id);
+        article.setView(article.getView()+1);
         List<Comment> commentList = commentRepository.findCommentsByArticleId(id);
-        article.setComments(commentList);
-        return new ArticleDetailResponse(article);
+        return new ArticleDetailResponse(article,commentList);
     }
 
     @Transactional
