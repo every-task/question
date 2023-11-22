@@ -5,7 +5,6 @@ import com.playdata.config.TokenInfo;
 import com.playdata.domain.article.entity.Category;
 import com.playdata.exception.NoTokenException;
 import com.playdata.exception.NotCorrectTokenIdException;
-import com.playdata.domain.article.entity.Article;
 import com.playdata.domain.article.request.ArticleCategoryRequest;
 import com.playdata.domain.article.request.ArticleRequest;
 import com.playdata.domain.article.response.ArticleDetailResponse;
@@ -22,7 +21,6 @@ import java.util.List;
 
 
 @RestController
-//추후 수정 mapping 주소
 @RequestMapping("/api/v1/question/article")
 @RequiredArgsConstructor
 
@@ -65,6 +63,12 @@ public class ArticleController {
         return articleCategoryRequest;
     }
 
+    @GetMapping("/popular")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<ArticleResponse> getArticleOrderByPoupluar(@RequestParam(value ="page",required = false,defaultValue = "0")int page,
+                                                           @RequestParam(value="size", required = false, defaultValue = "9")int size) {
+        return articleService.getArticleOrderByPoupluar(PageRequest.of(page,size));
+    }
     //질문 삭제
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
