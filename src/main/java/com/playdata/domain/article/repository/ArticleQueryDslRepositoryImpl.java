@@ -21,8 +21,7 @@ import static com.playdata.domain.article.entity.QArticle.article;
 
 public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
     private JPAQueryFactory jpaQueryFactory;
-    public ArticleQueryDslRepositoryImpl(EntityManager entityManager)
-    {
+    public ArticleQueryDslRepositoryImpl(EntityManager entityManager) {
         this.jpaQueryFactory=new JPAQueryFactory(entityManager);
     }
     @Override
@@ -49,9 +48,27 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
                                         .or(findExistKeyWordInNickName(articleCategoryRequest.getKeyword()))))
                 .fetchOne();
         PageImpl<Article> articlesList = new PageImpl<>(content, pageRequest, totalSize);
-        Page<ArticleResponse> map = articlesList.map(ArticleResponse::new);
-        return map;
+        Page<ArticleResponse> returnPages = articlesList.map(ArticleResponse::new);
+        return returnPages;
     }
+
+    @Override
+    public Page<ArticleResponse> getArticleByOrderByPoupular(PageRequest pageRequest) {
+        JPAQuery<Article> query =jpaQueryFactory.select(article)
+                .from(article)
+                .join(article.member)
+                .fetchJoin()
+                .where(article.isDeleted.eq(false))
+                .orderBy(article.view.asc())
+                .orderBy(article.createdAt.desc())
+                .offset(pageRequest.getOffset())
+                .limit(pageRequest.getPageSize());
+        List<Article> content = query.fetch();
+        PageImpl<Article> articlesList = new PageImpl<>(content, pageRequest, 9);
+        Page<ArticleResponse> returnPages = articlesList.map(ArticleResponse::new);
+        return returnPages;
+    }
+
     private BooleanBuilder findExistCategory(List<Category> category){
         return category==null ? null : categoryOrCondition(category);
     }
@@ -74,11 +91,14 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
         if(orderBy.equals("latest")) {
             orderSpecifiers.add(new OrderSpecifier(Order.DESC,article.createdAt));
         }
+        else if(orderBy.equals("oldest")) {
+            orderSpecifiers.add(new OrderSpecifier(Order.ASC,article.createdAt));
+        }
         else if(orderBy.equals("manyComments")) {
-            orderSpecifiers.add(new OrderSpecifier(Order.DESC,article.comments));
+            orderSpecifiers.add(new OrderSpecifier(Order.DESC,article.comments.size()));
         }
         else {
-            //TODO 조회수 순으로 정렬
+            orderSpecifiers.add(new OrderSpecifier(Order.DESC,article.view));
         }
         return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
     }
