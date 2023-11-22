@@ -12,5 +12,6 @@ import java.util.List;
 
 public interface ArticleQueryDslRepository {
     Page<ArticleResponse> getArticles(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest);
+    Page<ArticleResponse> getArticleByOrderByPoupular(PageRequest pageRequest);
 
 }
