@@ -13,13 +13,8 @@ import java.util.List;
 @Getter
 public class ArticleResponse extends ArticleDto{
     private MemberDto member;
-
-
-
-
     @QueryProjection
-    public ArticleResponse(Article article)
-    {
+    public ArticleResponse(Article article) {
         super(article);
         this.member=new MemberDto(article.getMember());
     }
