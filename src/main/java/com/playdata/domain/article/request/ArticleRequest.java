@@ -16,13 +16,22 @@ public class ArticleRequest {
     private String content;
     private String title;
     private Category category;
-    public Article toEntity(UUID memberId)
-    {
+    private String thumbnailImageUrl;
+
+    //test코드 용
+    public ArticleRequest(String content, String title, Category category) {
+        this.content=content;
+        this.title=title;
+        this.category=category;
+    }
+
+    public Article toEntity(UUID memberId) {
         return Article
                 .builder()
                 .content(content)
                 .title(title)
                 .category(category)
+                .thumbnailImageUrl(thumbnailImageUrl)
                 .member(Member.builder().id(memberId).build())
                 .build();
     }
