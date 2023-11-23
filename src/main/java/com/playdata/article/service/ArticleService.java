@@ -39,8 +39,8 @@ public class ArticleService {
     public Page<ArticleResponse> getAll(PageRequest pageRequest, ArticleCategoryRequest articleCategoryRequest) {
         return articleRepository.getArticles(pageRequest,articleCategoryRequest);
     }
-    public Page<ArticleResponse> getArticleOrderByPoupluar(PageRequest pageRequest) {
-        return articleRepository.getArticleByOrderByPoupular(pageRequest);
+    public List<ArticleResponse> getArticleOrderByPoupluar() {
+        return articleRepository.getArticleByOrderByPoupular();
     }
 
     public Article findById(Long id) {

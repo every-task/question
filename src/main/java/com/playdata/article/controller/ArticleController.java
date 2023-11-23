@@ -65,9 +65,8 @@ public class ArticleController {
 
     @GetMapping("/popular")
     @ResponseStatus(HttpStatus.OK)
-    public Page<ArticleResponse> getArticleOrderByPoupluar(@RequestParam(value ="page",required = false,defaultValue = "0")int page,
-                                                           @RequestParam(value="size", required = false, defaultValue = "9")int size) {
-        return articleService.getArticleOrderByPoupluar(PageRequest.of(page,size));
+    public List<ArticleResponse> getArticleOrderByPoupluar() {
+        return articleService.getArticleOrderByPoupluar();
     }
     //질문 삭제
     @DeleteMapping("{id}")
