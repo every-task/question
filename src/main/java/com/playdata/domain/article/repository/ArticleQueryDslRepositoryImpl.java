@@ -53,7 +53,7 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
     }
 
     @Override
-    public Page<ArticleResponse> getArticleByOrderByPoupular(PageRequest pageRequest) {
+    public List<ArticleResponse> getArticleByOrderByPoupular() {
         JPAQuery<Article> query =jpaQueryFactory.select(article)
                 .from(article)
                 .join(article.member)
@@ -61,12 +61,10 @@ public class ArticleQueryDslRepositoryImpl implements ArticleQueryDslRepository{
                 .where(article.isDeleted.eq(false))
                 .orderBy(article.view.asc())
                 .orderBy(article.createdAt.desc())
-                .offset(pageRequest.getOffset())
-                .limit(pageRequest.getPageSize());
+                .offset(0)
+                .limit(9);
         List<Article> content = query.fetch();
-        PageImpl<Article> articlesList = new PageImpl<>(content, pageRequest, 9);
-        Page<ArticleResponse> returnPages = articlesList.map(ArticleResponse::new);
-        return returnPages;
+        return content.stream().map(ArticleResponse::new).toList();
     }
 
     private BooleanBuilder findExistCategory(List<Category> category){
