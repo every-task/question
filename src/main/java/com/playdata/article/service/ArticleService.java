@@ -3,7 +3,6 @@ package com.playdata.article.service;
 import com.playdata.config.TokenInfo;
 import com.playdata.domain.comment.entity.Comment;
 import com.playdata.domain.comment.repository.CommentRepository;
-import com.playdata.domain.member.kafka.Action;
 import com.playdata.exception.NoArticleByIdException;
 import com.playdata.exception.NotCorrectTokenIdException;
 import com.playdata.domain.article.entity.Article;
@@ -50,6 +49,7 @@ public class ArticleService {
                 new NoArticleByIdException("No Article . id = {%s}".formatted(String.valueOf(id))));
         return article;
     }
+    @Transactional
     public ArticleDetailResponse getById(Long id) {
         Article article =findById(id);
         article.setView(article.getView()+1);
