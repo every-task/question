@@ -30,5 +30,4 @@ public class Article extends BaseEntity {
     private Member member;
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
-    private String thumbnailImageUrl;
 }
